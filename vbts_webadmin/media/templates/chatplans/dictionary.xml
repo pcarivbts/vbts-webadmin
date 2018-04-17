@@ -1,0 +1,13 @@
+<!-- Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+-->
+<extension name="{{ keyword }}">
+    <condition field="vbts_tp_dest_address" expression="^{{ number }}$"/>
+    <condition field="${data_0}" expression="^{{ keyword }}$">
+        <action application="python" data='FS_PCARI_Dictionary ${data_0}|${data_1}|${data_2}'/>
+        <action application="python" data="VBTS_Send_SMS ${vbts_callerid}|${vbts_tp_dest_address}|${_result}"/>
+    </condition>
+</extension>

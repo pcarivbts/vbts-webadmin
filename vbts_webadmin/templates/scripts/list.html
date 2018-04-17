@@ -1,0 +1,88 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load apptags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Plugins</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-12" >
+   <div class="pull-right">
+		{% crispy form%}
+   </div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table  id="scripts-data" class="table table-striped">
+      <thead>
+        <tr>
+            <th>Package</th>
+            <th>Name</th>
+            <th>Version</th>
+            <th>Author</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+
+            {% for script in scripts %}
+            <tr>
+                <td>
+                <a href="{% url 'script_detail' script.id %}">
+                {{ script.name }}-{{script.version}}</a></td>
+                <td>{{ script.name }}</a></td>
+                <td>{{ script.version }}</td>
+                <td>{{ script.author }}</td>
+                <td>{{ script.description }}</td>
+            </tr>
+            {% endfor %}
+            <tr id="noresult" {% if scripts %} style="display:none" {%endif %}>
+                <td colspan="6">
+                No results found.
+            </td>
+            </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    function toggle_table_row(action){
+        var searchString = 'Install Now';
+        $("#scripts-data tr td a:contains('" + searchString  + "')").each(function() {
+            if ($(this).text() == searchString) {
+                if (action){
+                    $(this).closest('tr').hide();
+                }else{
+                    $(this).closest('tr').show();
+                }
+            }
+        });
+    }
+    $('input[type=radio][name=where_to_search]').change(function() {
+        if (this.value == '0')
+            toggle_table_row(true)
+        else if (this.value == '1')
+            toggle_table_row(false)
+
+        var numOfVisibleRows = $('#scripts-data tr:visible').length;
+        if (numOfVisibleRows == 1 )
+             $('#noresult').show();
+        else
+            $('#noresult').hide();
+    });
+});
+</script>
+{% endblock %}
+

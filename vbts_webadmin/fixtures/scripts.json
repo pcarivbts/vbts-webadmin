@@ -1,0 +1,61 @@
+[{
+    "fields": {
+        "status": "D",
+        "description": "PCARI File Reader Plugin",
+        "package_name": "pcarifilereader-1.0",
+        "author": "PCARI VBTS",
+        "fs_script": "PCARI_FileReader.py",
+        "date_downloaded": "2016-11-22T09:37:31.512Z",
+        "arguments": "{\"files\":{\"SAMPLE\":\"data/sample.text\"}}",
+        "version": "1.0",
+        "chatplan": "filereader.xml",
+        "name": "pcarifilereader"
+    },
+    "model": "vbts_webadmin.script",
+    "pk": "1007ec06-9aa7-4a14-a5b7-a50d11694cf4"
+}, {
+    "fields": {
+        "status": "D",
+        "description": "PCARI Twitter Plugin",
+        "package_name": "pcaritwits-1.0",
+        "author": "PCARI VBTS",
+        "fs_script": "PCARI_Twitter.py",
+        "date_downloaded": "2016-11-22T09:37:31.628Z",
+        "arguments": "{\"TWITTER_TOKEN\":\"token\",\"locations\":{\"WORLDWIDE\":1,\"CALOOCAN\":1167715,\"CEBU\":1199002,\"ANTIPOLO\":1195098,\"CDO\":1198785,\"MAKATI\":1180689,\"QC\":1199682,\"TAGUIG\":1187115,\"MANILA\":1199477,\"PASIG\":1187115,\"PH\":23424934,\"DAVAO\":1199079,\"ZAMBOANGA\":11999802},\"TWITTER_CONSUMER_SECRET\":\"consumer_secret\",\"max_number_of_tweets\":5,\"TWITTER_CONSUMER_KEY\":\"consumer_key\",\"TWITTER_TOKEN_SECRET\":\"token_secret\",\"include_rts\":false}",
+        "version": "1.0",
+        "chatplan": "twits.xml",
+        "name": "pcaritwits"
+    },
+    "model": "vbts_webadmin.script",
+    "pk": "4acda29f-a8f2-4ec2-a30d-d2e7c49a35ba"
+}, {
+    "fields": {
+        "status": "D",
+        "description": "PCARI Dictionary Plugin",
+        "package_name": "pcaridictionary-1.0",
+        "author": "PCARI VBTS",
+        "fs_script": "PCARI_Dictionary.py",
+        "date_downloaded": "2016-11-22T09:37:31.566Z",
+        "arguments": null,
+        "version": "1.0",
+        "chatplan": "dictionary.xml",
+        "name": "pcaridictionary"
+    },
+    "model": "vbts_webadmin.script",
+    "pk": "543d9821-4361-45ed-a64c-84255a7d0081"
+}, {
+    "fields": {
+        "status": "D",
+        "description": "PCARI RSS Plugin",
+        "package_name": "pcarirss-1.0",
+        "author": "PCARI VBTS",
+        "fs_script": "PCARI_RSS.py",
+        "date_downloaded": "2016-11-22T09:37:31.690Z",
+        "arguments": "{\"feeds\":{\"PSEDUCATION\":\"http://www.philstar.com/rss/education-and-home\",\"PSHEALTH\":\"http://www.philstar.com/rss/health-and-family\",\"PSSPORTS\":\"http://www.philstar.com/rss/sports\",\"PSAGRICULTURE\":\"http://www.philstar.com/rss/agriculture\",\"PSHEADLINES\":\"http://www.philstar.com/rss/headlines\",\"GMA7SPORTS\":\"http://www.gmanetwork.com/news/rss/sports\",\"RAPPLER\":\"http://feeds.feedburner.com/rappler\",\"PSNATION\":\"http://www.philstar.com/rss/nation\",\"GMA7SCITECH\":\"http://www.gmanetwork.com/news/rss/scitech\",\"GMA7NATION\":\"http://www.gmanetwork.com/news/rss/news/nation\",\"PHILSTAR\":\"http://www.philstar.com/rss/breakingnews\",\"GMA7HEALTH\":\"http://www.gmanetwork.com/news/rss/lifestyle/healthandwellness\",\"GMA7SHOWBIZ\":\"http://www.gmanetwork.com/news/rss/showbiz\"},\"max_number_of_feeds\":10}",
+        "version": "1.0",
+        "chatplan": "rss.xml",
+        "name": "pcarirss"
+    },
+    "model": "vbts_webadmin.script",
+    "pk": "9b23826f-a476-4cb6-a241-4e6bdd5cf9af"
+}]

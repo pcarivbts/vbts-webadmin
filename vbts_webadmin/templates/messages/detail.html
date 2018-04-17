@@ -1,0 +1,84 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Message</h1>
+    <h1>
+		<a href="{% url 'messages'%}" class="glyphicon glyphicon-arrow-left" title="Return to List"></a>
+    </h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<br>
+<h3>Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Date Sent</strong></td>
+            <td>{{ message.date }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Sender</strong></td>
+			<td>{{ message.author }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Recipients</strong></td>
+			<td>
+                {% for recipient in message.recipients.all %}
+                <p>
+                {{ recipient }}
+                </p>
+                {% endfor %}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Message Body</strong></td>
+			<td>{{ message.message|linebreaks }}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+<!--<table>-->
+	<!--<tr>-->
+		<!--<td> <h3>Recipients</h3>-->
+		<!--</td>-->
+	<!--</tr>-->
+	<!--{% for recipient in message.recipients.all %}-->
+    <!--<tr><td>-->
+    		<!--<span>-->
+			<!--<i class="glyphicon glyphicon-user btn-lg"></i>-->
+			<!--{{ recipient }}-->
+			<!--</span>-->
+    <!--</td></tr>-->
+    <!--{% endfor %}-->
+   <!--<tr>-->
+		<!--<td> <h3>Date</h3>-->
+		<!--<span>-->
+		<!--{{message.date}}-->
+		<!--<span>-->
+		<!--</td>-->
+   <!--</tr>-->
+   <!--<tr>-->
+		<!--<td> <h3>Message</h3>-->
+		<!--<span>-->
+		<!--{{message.message}}-->
+		<!--<span>-->
+		<!--</td>-->
+	<!--</tr>-->
+
+<!--</table>-->
+{% endblock %}

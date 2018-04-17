@@ -1,0 +1,24 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Broadcast Message</h1>
+{% endblock %}
+{% block dashboard-content %}
+		{% crispy form%}
+{% endblock %}
+{% block extra_javascript %}
+<link href="{% static 'autocomplete_light/vendor/select2/dist/css/select2.css' %}" type="text/css" media="all" rel="stylesheet">
+<script src="{% static 'autocomplete_light/vendor/select2/dist/js/select2.full.js' %}"></script>
+<script src="{% static 'autocomplete_light/select2.js' %}"></script>
+<script type="text/javascript">
+$(".circle-selectmultiple").select2();
+</script>
+{% endblock %}

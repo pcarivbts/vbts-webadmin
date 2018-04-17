@@ -1,0 +1,292 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{contact_profile.firstname}}&nbsp;{{ contact_profile.lastname }}</h1>
+    <h1>
+        <a href="{% url 'contacts' %}" class="glyphicon glyphicon-arrow-left" title="Go back  to list"></a>
+		<a href="{% url 'contact_update' contact_profile.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+        {%comment%}
+        <a href="{% url 'contact_add_promo' contact.callerid %}" class="glyphicon glyphicon-usd" title="Add Promo"></a>
+        {%endcomment%}
+		<a href="{% url 'contact_delete' contact_profile.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+    </h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<br>
+<h3>Subscriber Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>UUID</strong></td>
+            <td>{{contact_profile.uuid|stringformat:"05d" }}
+            </td>
+        </tr>
+        <tr>
+			<td><strong>Name</strong></td>
+            <td>{{contact_profile.firstname}} {{contact_profile.lastname}}
+            </td>
+        </tr>
+        <tr>
+			<td><strong>Nickname</strong></td>
+			<td>{{contact_profile.nickname}}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Age</strong></td>
+			<td>{{contact_profile.age}}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Gender</strong></td>
+			<td>{{contact_profile.get_gender_display}}
+            </td>
+		</tr>
+		<tr>
+			<td><strong>Address</strong></td>
+			<td>Sitio {{ contact_profile.get_sitio_display }},
+                {{ contact_profile.get_barangay_display }},
+                {{ contact_profile.get_municipality_display }}
+            </td>
+		</tr>
+        {%comment%}
+        <tr>
+			<td><strong>Callerid</strong></td>
+			<td>{{ contact.callerid }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>IMSI</strong></td>
+			<td>{{ contact.imsi }}
+            </td>
+		</tr>
+    {%endcomment%}
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<h3>SIM Cards</h3>
+{% if sims %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>IMSI</th>
+            <th>Caller ID</th>
+            <th>Date Registered</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for sim in sims %}
+        <tr>
+            <td>
+               {{ sim.contact.imsi }}
+            </td>
+            <td>
+                {{ sim.contact.callerid }}
+            </td>
+            <td>
+                {{ sim.date_registered }}
+            </td>
+            <td>
+                <span class="pull-right">
+                <a href="{% url 'contact_add_promo' sim.contact.callerid %}" class="glyphicon glyphicon-usd" title="Add Promo"></a>
+                </span>
+            </td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead></thead>
+      <tbody>
+        <tr><td><i>No registered family and friends.</i></td></tr>
+      </tbody>
+      </table>
+</div>
+{% endif %}
+<br>
+
+<h3>Family and Friends</h3>
+{% if group %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Caller ID</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for member in group.members.all %}
+        <tr>
+            <td>
+                {% if "OFFNET" in member.imsi %}
+                    Off-network number
+
+                {% else %}
+                    {% if 'Unregistered' in member.get_profile %}
+                        Unregistered VBTS number
+                    {% else %}
+                        <a href="{% url 'contact_detail' member.get_profile.id %}">{{ member.get_profile }}</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>{{ member.callerid }}
+            </td>
+            <td></td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead></thead>
+      <tbody>
+        <tr><td><i>No registered family and friends.</i></td></tr>
+      </tbody>
+      </table>
+</div>
+{% endif %}
+<br>
+
+<h3>Promo Subscriptions</h3>
+{% if promo_subscription %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>SIM</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Keyword</th>
+            <th>Local SMS</th>
+            <th>Local Calls</th>
+            <th>Off-Network SMS</th>
+            <th>Off-Network Calls</th>
+			<th>Expiry</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for item in promo_subscription %}
+        <tr>
+            <td>{{ item.contact }}</td>
+            <td>{{ item.promo.name }}
+            </td>
+            <td>{{ item.promo.get_promo_type_display }}
+            </td>
+            <td>{{ item.promo.keyword }}
+            </td>
+            {% if item.promo.promo_type == 'D' or item.promo.promo_type == 'G'%}
+                <td>{{ item.local_sms|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ item.local_call|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ item.outside_sms|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ item.outside_call|div:100000|floatformat:2 }}
+                </td>
+            {% elif item.promo.promo_type == 'U' %}
+                <td>{{ item.local_sms|yesno:"Yes, No"  }}
+                </td>
+                <td>{{ item.local_call|yesno:"Yes, No"  }}
+                </td>
+                <td>{{ item.outside_sms|yesno:"Yes, No"  }}
+                </td>
+                <td>{{ item.outside_call|yesno:"Yes, No"  }}
+                </td>
+            {% else %}
+                <td>{{ item.local_sms }}
+                </td>
+                <td>{{ item.local_call }}
+                </td>
+                <td>{{ item.outside_sms }}
+                </td>
+                <td>{{ item.outside_call }}
+                </td>
+            {% endif %}
+			<td>{{ item.date_expiration }}
+			</td>
+            <td>
+                <a href="{% url 'promo_delete_subscription' item.id %}?from={{ request.path|urlencode }}"
+                   class="glyphicon glyphicon-trash" title="Delete subscription"></a>
+            </td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead></thead>
+      <tbody>
+        <tr><td><i>No subscriptions</i></td></tr>
+      </tbody>
+      </table>
+</div>
+{% endif %}
+
+
+<br>
+<h3>Service Subscriptions</h3>
+{% if service_subscription %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Keyword</th>
+            <th>Type</th>
+            <th>Subscription Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for item in service_subscription %}
+        <tr>
+            <td>{{ item.service.name }}
+            </td>
+            <td>{{ item.service.keyword }}
+            </td>
+            <td>{{ item.service.get_service_type_display }}
+			<td>{{ item.date_subscribed }}
+			</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead></thead>
+      <tbody>
+        <tr><td><i>No subscriptions</i></td></tr>
+      </tbody>
+      </table>
+</div>
+{% endif %}
+{% endblock %}

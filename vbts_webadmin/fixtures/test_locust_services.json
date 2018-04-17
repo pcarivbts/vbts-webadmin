@@ -1,0 +1,83 @@
+[
+  {
+    "fields": {
+      "every": 1,
+      "period": "days"
+    },
+    "model": "djcelery.intervalschedule",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "last_update": "2016-12-20T06:54:32.151Z"
+    },
+    "model": "djcelery.periodictasks",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "task": "vbts_webadmin.tasks.push_cmd_routine",
+      "name": "vbts_webadmin.tasks.push_cmd_routine_2016-12-20 06:54:27.622698+00:00",
+      "exchange": null,
+      "last_run_at": null,
+      "args": "[1]",
+      "enabled": true,
+      "routing_key": null,
+      "crontab": null,
+      "interval": 1,
+      "queue": null,
+      "total_run_count": 0,
+      "expires": null,
+      "kwargs": "{}",
+      "date_changed": "2016-12-20T06:54:32.159Z",
+      "description": ""
+    },
+    "model": "djcelery.periodictask",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "periodic_task": 1,
+      "service": 1
+    },
+    "model": "vbts_webadmin.servicescheduledtasks",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "status": "P",
+      "name": "Sample",
+      "keyword": "SAMPLE",
+      "author": 1,
+      "price": 100000,
+      "script": "543d9821-4361-45ed-a64c-84255a7d0081",
+      "number": 111,
+      "script_arguments": null,
+      "source_file": "",
+      "published_date": "2016-12-20",
+      "service_type": "P",
+      "chatplan": null,
+      "description": "Sample service"
+    },
+    "model": "vbts_webadmin.service",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "subscriber": "IMSI001010000000008",
+      "date_subscribed": "2016-12-20T07:00:25.013Z",
+      "service": 1
+    },
+    "model": "vbts_webadmin.servicesubscribers",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "manager": "IMSI001010000000008",
+      "date_joined": "2016-12-20T07:00:25.013Z",
+      "service": 1
+    },
+    "model": "vbts_webadmin.servicemanagers",
+    "pk": 1
+  }
+]

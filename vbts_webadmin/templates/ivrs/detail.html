@@ -1,0 +1,52 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{ ivr.name }}</h1>
+    <h1>
+		<a href="{% url 'ivr_update' ivr.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+		<a href="{% url 'ivr_delete' ivr.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+    </h1>
+{% endblock %}
+
+{% block dashboard-content %}
+
+<br>
+<h3>IVR Details</h3>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Key Name</strong></td>
+            <td>{{ ivr.name }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Number</strong></td>
+			<td>{{ ivr.number }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Description</strong></td>
+			<td>{{ ivr.description|linebreaks }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Code</strong></td>
+			<td>{{ ivr.code|linebreaks }}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

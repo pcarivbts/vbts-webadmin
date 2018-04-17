@@ -1,0 +1,104 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load apptags %}
+{% load mathfilters%}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <h1 class="page-header">{{ service.name }}</h1>
+{% endblock %}
+{% block dashboard-header %}
+    <h1>
+        <a href="{% url 'services' %}" class="glyphicon glyphicon-arrow-left" title="Return to list"></a>
+        <a href="{% url 'service_detail' service.id %}" class="glyphicon glyphicon-list-alt" title="Return to service details"></a>
+    </h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<h3>Service Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td>{{ service.name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Description</strong></td>
+            <td>{{ service.description }}</td>
+        </tr>
+        <tr>
+			<td><strong>Script</strong></td>
+			<td>{{ service.script }}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<h3>Edit Service Script Details</h3>
+<br>
+        {% crispy form%}
+{% endblock %}
+
+{% block extra_javascript %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var max_fields      = 20;
+    var wrapper         = $(".script-properties");
+    var add_button      = $("#add_field_button");
+    var x = 1;
+    $(add_button).click(function(e){
+        e.preventDefault();
+        if(x < max_fields){
+            x++;
+            var row = $(this).closest('tr');
+            var prev = row.prev();
+            var clone = prev.clone();
+            clone.insertAfter(prev);
+            clone.find("input").each(function() {
+                $input = $(this)
+                $input.val("");
+                $input.prop("value", "");
+                $input.focus();
+            });
+        }
+    });
+    $('.add_item').each(function(i, obj) {
+        $(this).hide();
+    });
+    $(wrapper).on("click",".remove_item", function(e){
+        $tr = $(this).closest("tr")
+        $tr.find('.add_item').show();
+        $tr.find('.remove_item').hide();
+        $tr.find("input").each(function() {
+            $input = $(this)
+            $input.prop("disabled", true);
+            $input.focus();
+        });
+    })
+    $(wrapper).on("click",".add_item", function(e){
+        $tr = $(this).closest("tr")
+        $tr.find('.remove_item').show();
+        $tr.find('.add_item').hide();
+        $tr.find("input").each(function() {
+            $input = $(this)
+            $input.prop("disabled", false);
+            $input.focus();
+        });
+    })
+
+});
+</script>
+{% endblock %}

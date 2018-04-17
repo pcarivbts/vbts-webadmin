@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% block content %}
+<br/><br/><br/><br/>
+<div class="container">
+    <div class="row header">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Sign In</h2>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+                 <form method="POST" role="form"> {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Username</label>
+                        <input type="text" class="form-control" name="username" maxlength="254" required="" id="id_username" autofocus="">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Password" autofocus name="password" id="id_password" value="" />
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}">
+                    <button type="submit" id='login-button' class="btn btn-lg btn-primary btn-block">Sign in</button>
+                    {% for message in messages %}
+                      <div class='alert alert-danger message'>{{ message }}</div>
+                    {% endfor %}
+
+                </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+[
+  {
+    "model": "vbts_webadmin.promo",
+    "pk": 1,
+    "fields": {
+      "author": 1,
+      "name": "Sample Discounted Promo",
+      "price": 1000000,
+      "promo_type": "D",
+      "keyword": "SDISC",
+      "number": "111",
+      "local_sms": 50000,
+      "local_call": 300000,
+      "outside_sms": 50000,
+      "outside_call": 400000,
+      "validity": 1,
+      "date_created": "2016-12-16"
+    }
+  },
+  {
+    "fields": {
+      "date_expiration": "2016-12-20T02:33:30.035Z",
+      "outside_sms": 50000,
+      "promo": 1,
+      "date_availed": "2016-12-19T02:33:30.035Z",
+      "local_call": 300000,
+      "contact": "IMSI001010000000008",
+      "local_sms": 50000,
+      "outside_call": 400000
+    },
+    "model": "vbts_webadmin.promosubscription",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "lastname": "User",
+      "birthdate": "2016-12-06",
+      "firstname": "Test2",
+      "callerid": "639990000002",
+      "address": "QC"
+    },
+    "model": "vbts_webadmin.contact",
+    "pk": "IMSI001010000000008"
+  },
+  {
+    "fields": {
+      "lastname": "User",
+      "birthdate": "2016-12-06",
+      "firstname": "Test1",
+      "callerid": "639990000001",
+      "address": "QC"
+    },
+    "model": "vbts_webadmin.contact",
+    "pk": "IMSI001010000000009"
+  }
+]

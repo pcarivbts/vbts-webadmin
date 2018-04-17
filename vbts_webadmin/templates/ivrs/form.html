@@ -1,0 +1,612 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+<h1 class="page-header">IVRs</h1>
+
+    <script src="{% static "blockly/blockly_compressed.js" %}"></script>
+    <script src="{% static "blockly/blocks_compressed.js" %}"></script>
+    <script src="{% static "blockly/msg/js/en.js" %}"></script>
+    <script src="{% static "blockly/lua_compressed.js" %}"></script>
+    <script src="{% static "blockly/session.js" %}"></script>
+    <script src="{% static "blockly/ivr_blocks.js" %}"></script>
+    <script src="{% static "blockly/ivr_menu.js" %}"></script>
+
+    <div id="blocklyDiv" style="height: 480px; width: document.body.clientWidth;"></div>
+    <!--<xml id="toolbox" style="display: none" src="{% static "blockly/toolbox.xml" %}"></xml>-->
+
+    <xml id="toolbox" style="display: none">
+        <category name="Logic" colour="210">
+          <block type="controls_if"></block>
+          <block type="logic_compare"></block>
+          <block type="logic_operation"></block>
+          <block type="logic_negate"></block>
+          <block type="logic_boolean"></block>
+          <block type="logic_null"></block>
+          <block type="logic_ternary"></block>
+        </category>
+        <category name="Loops" colour="120">
+          <block type="controls_repeat_ext">
+            <value name="TIMES">
+              <shadow type="math_number">
+                <field name="NUM">10</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="controls_whileUntil"></block>
+          <block type="controls_for">
+            <value name="FROM">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="TO">
+              <shadow type="math_number">
+                <field name="NUM">10</field>
+              </shadow>
+            </value>
+            <value name="BY">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="controls_forEach"></block>
+          <block type="controls_flow_statements"></block>
+        </category>
+        <category name="Math" colour="230">
+          <block type="math_number"></block>
+          <block type="math_arithmetic">
+            <value name="A">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="B">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_single">
+            <value name="NUM">
+              <shadow type="math_number">
+                <field name="NUM">9</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_trig">
+            <value name="NUM">
+              <shadow type="math_number">
+                <field name="NUM">45</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_constant"></block>
+          <block type="math_number_property">
+            <value name="NUMBER_TO_CHECK">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_change">
+            <value name="DELTA">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_round">
+            <value name="NUM">
+              <shadow type="math_number">
+                <field name="NUM">3.1</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_on_list"></block>
+          <block type="math_modulo">
+            <value name="DIVIDEND">
+              <shadow type="math_number">
+                <field name="NUM">64</field>
+              </shadow>
+            </value>
+            <value name="DIVISOR">
+              <shadow type="math_number">
+                <field name="NUM">10</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_constrain">
+            <value name="VALUE">
+              <shadow type="math_number">
+                <field name="NUM">50</field>
+              </shadow>
+            </value>
+            <value name="LOW">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="HIGH">
+              <shadow type="math_number">
+                <field name="NUM">100</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_random_int">
+            <value name="FROM">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="TO">
+              <shadow type="math_number">
+                <field name="NUM">100</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="math_random_float"></block>
+        </category>
+        <category name="Text" colour="160">
+          <block type="text"></block>
+          <block type="text_join"></block>
+          <block type="text_append">
+            <value name="TEXT">
+              <shadow type="text"></shadow>
+            </value>
+          </block>
+          <block type="text_length">
+            <value name="VALUE">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_isEmpty">
+            <value name="VALUE">
+              <shadow type="text">
+                <field name="TEXT"></field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_indexOf">
+            <value name="VALUE">
+              <block type="variables_get">
+                <field name="VAR">{textVariable}</field>
+              </block>
+            </value>
+            <value name="FIND">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_charAt">
+            <value name="VALUE">
+              <block type="variables_get">
+                <field name="VAR">{textVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="text_getSubstring">
+            <value name="STRING">
+              <block type="variables_get">
+                <field name="VAR">{textVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="text_changeCase">
+            <value name="TEXT">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_trim">
+            <value name="TEXT">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_print">
+            <value name="TEXT">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="text_prompt_ext">
+            <value name="TEXT">
+              <shadow type="text">
+                <field name="TEXT">abc</field>
+              </shadow>
+            </value>
+          </block>
+        </category>
+        <category name="Lists" colour="260">
+          <block type="lists_create_with">
+            <mutation items="0"></mutation>
+          </block>
+          <block type="lists_create_with"></block>
+          <block type="lists_repeat">
+            <value name="NUM">
+              <shadow type="math_number">
+                <field name="NUM">5</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="lists_length"></block>
+          <block type="lists_isEmpty"></block>
+          <block type="lists_indexOf">
+            <value name="VALUE">
+              <block type="variables_get">
+                <field name="VAR">{listVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="lists_getIndex">
+            <value name="VALUE">
+              <block type="variables_get">
+                <field name="VAR">{listVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="lists_setIndex">
+            <value name="LIST">
+              <block type="variables_get">
+                <field name="VAR">{listVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="lists_getSublist">
+            <value name="LIST">
+              <block type="variables_get">
+                <field name="VAR">{listVariable}</field>
+              </block>
+            </value>
+          </block>
+          <block type="lists_split">
+            <value name="DELIM">
+              <shadow type="text">
+                <field name="TEXT">,</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="lists_sort"></block>
+        </category>
+        <category name="Colour" colour="20">
+          <block type="colour_picker"></block>
+          <block type="colour_random"></block>
+          <block type="colour_rgb">
+            <value name="RED">
+              <shadow type="math_number">
+                <field name="NUM">100</field>
+              </shadow>
+            </value>
+            <value name="GREEN">
+              <shadow type="math_number">
+                <field name="NUM">50</field>
+              </shadow>
+            </value>
+            <value name="BLUE">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="colour_blend">
+            <value name="COLOUR1">
+              <shadow type="colour_picker">
+                <field name="COLOUR">#ff0000</field>
+              </shadow>
+            </value>
+            <value name="COLOUR2">
+              <shadow type="colour_picker">
+                <field name="COLOUR">#3333ff</field>
+              </shadow>
+            </value>
+            <value name="RATIO">
+              <shadow type="math_number">
+                <field name="NUM">0.5</field>
+              </shadow>
+            </value>
+          </block>
+        </category>
+        <sep></sep>
+        <category name="Variables" colour="330" custom="VARIABLE"></category>
+        <category name="Functions" colour="290" custom="PROCEDURE"></category>
+      <sep></sep>
+        <!--Lua Session API-->
+      <category name="Lua Session API" colour="65">
+        <block type="session_ready"></block>
+        <block type="session_answer"></block>
+        <block type="session_sleep">
+            <value name="s">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_streamfile">
+            <value name="filename">
+              <shadow type="text">
+                <field name="TEXT">/path/to/file</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_speak">
+            <value name="textstring">
+              <shadow type="text">
+                <field name="TEXT">Hello</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_execute">
+            <value name="app">
+              <shadow type="text">
+                <field name="TEXT">app_name</field>
+              </shadow>
+            </value>
+            <value name="data">
+              <shadow type="text">
+                <field name="TEXT">args1, args2</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_consolelog">
+            <value name="msg">
+              <shadow type="text">
+                <field name="TEXT">Log message</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_set_tts_params"></block>
+        <block type="session_getdigits">
+            <value name="max_digits">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="timeout">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="terminator">
+              <shadow type="text">
+                <field name="TEXT">#</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_setautohangup">
+            <value name="condition">
+              <shadow type="logic_boolean">
+              </shadow>
+            </value>
+        </block>
+        <block type="session_hangup"></block>
+        <block type="session_bridged"></block>
+        <block type="session_get_variable">
+            <value name="variable_name">
+              <shadow type="text">
+                <field name="TEXT">var_name</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="session_set_variable">
+            <value name="variable_name">
+              <shadow type="text">
+                <field name="TEXT">var_name</field>
+              </shadow>
+            </value>
+            <value name="variable_value">
+              <shadow type="text">
+                <field name="TEXT">var_value</field>
+              </shadow>
+            </value>
+        </block>
+      </category>
+      <!--Ready-made IVR Blocks-->
+      <category name="IVR Blocks" colour="120">
+        <block type="start_call"></block>
+        <block type="end_call"></block>
+        <block type="speak_text">
+            <value name="textstring">
+              <shadow type="text">
+                <field name="TEXT">"Hello"</field>
+              </shadow>
+            </value>
+        </block>
+        <block type="play_music"></block>
+        <block type="ivrmenu_if">
+            <value name="timeout">
+              <shadow type="math_number">
+                <field name="NUM">3</field>
+              </shadow>
+            </value>
+            <value name="max_digits">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="IF0">
+              <shadow type="text">
+                <field name="TEXT">#</field>
+              </shadow>
+            </value>
+        </block>
+        <!--<block type="record_file"></block>-->
+        <block type="record_file_2">
+            <value name="directory">
+              <shadow type="text">
+                <field name="TEXT">/tmp</field>
+              </shadow>
+            </value>
+            <value name="max_len_secs">
+              <shadow type="math_number">
+                <field name="NUM">300</field>
+              </shadow>
+            </value>
+        </block>
+      </category>
+      <sep></sep>
+      <category name="Examples" expanded="true">
+            <category name='Simple Call'>
+                <block type="start_call" id=",nH/LL;HRFz[=6J/PvO/" x="217" y="70">
+                <next>
+                  <block type="speak_text" id="v)!g2^myehR%nBXn6TnR">
+                    <value name="textstring">
+                      <shadow type="text" id="@BJhVH(JxX%UCtMvp|B5">
+                        <field name="TEXT">"Hello!"</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="speak_text" id="*vpG{:x*/,6V?[@fHwkK">
+                        <value name="textstring">
+                          <shadow type="text" id="_0y-NXw!9KIm+7_!e(f9">
+                            <field name="TEXT">You will hear a music file</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="play_music" id="9:v`yS-ePXrKl(,4-uEN">
+                            <field name="musicfiles">/usr/share/freeswitch/sounds/music/default/8000/danza-espanola-op-37-h-142-xii-arabesca.wav</field>
+                            <next>
+                              <block type="end_call" id="SU#8t]COYpq=[=O`u^(^"></block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+                        </category>
+
+                        <!--SIMPLE IVR MENU-->
+                        <category name="Simple IVR Menu">
+                            <block type="start_call" id="2=?5GEUDoTZwUDe|OJ/^" x="147" y="60">
+                <next>
+                  <block type="speak_text" id="7ah(w(#]S3#V%1P*e_nX">
+                    <value name="textstring">
+                      <shadow type="text" id="~gRv}#]E[YtxV_zQDaep">
+                        <field name="TEXT">This is a simple IVR menu.</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="ivrmenu_if" id="Rj7UGUVx,=L.A+19u2M.">
+                        <mutation elseif="1" else="1"></mutation>
+                        <value name="timeout">
+                          <shadow type="math_number" id="`qJ]/}dnp(s]o{EI{j^4">
+                            <field name="NUM">3</field>
+                          </shadow>
+                        </value>
+                        <value name="max_digits">
+                          <shadow type="math_number" id="cuaY68Vj6wESuO-u?1nf">
+                            <field name="NUM">1</field>
+                          </shadow>
+                        </value>
+                        <value name="IF0">
+                          <shadow type="text" id="7nc_8!P}^}gC:dM.)/@X">
+                            <field name="TEXT">1</field>
+                          </shadow>
+                          <block type="text" id="r`a(UH/T+YBr4U9RAMJo">
+                            <field name="TEXT">1</field>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="speak_text" id="]pjk_.81POFp;B{J(*ac">
+                            <value name="textstring">
+                              <shadow type="text" id=",tn,%KG-3E3D8rmp{paL">
+                                <field name="TEXT">You pressed 1.</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </statement>
+                        <value name="IF1">
+                          <block type="text" id="vXnQGBS0Ecw*5F*=6Z8R">
+                            <field name="TEXT">2</field>
+                          </block>
+                        </value>
+                        <statement name="DO1">
+                          <block type="speak_text" id="pG[moXd|x{YkgfmBp~Di">
+                            <value name="textstring">
+                              <shadow type="text" id="`m*pxZ2_[yX!%k=wr8*V">
+                                <field name="TEXT">You pressed 2.</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </statement>
+                        <statement name="ELSE">
+                          <block type="speak_text" id="sfqQQNtIySdq0EcAb]Ms">
+                            <value name="textstring">
+                              <shadow type="text" id="Pfi6U0p+3_Ajk8i?-9;z">
+                                <field name="TEXT">You did not press a key.</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="end_call" id="y(jgIz2L[C_w-0wPt~j:"></block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </category>
+      <category>
+      </xml>
+
+{% endblock %}
+
+{% block dashboard-content %}
+
+<script>
+    var workspace = Blockly.inject('blocklyDiv',
+      {toolbox: document.getElementById('toolbox')});
+
+    Blockly.Xml.domToWorkspace(document.getElementById('toolbox'),
+                               workspace);
+
+    function myUpdateFunction() {
+        var code = Blockly.Lua.workspaceToCode(workspace);
+        document.getElementById('id_tmp_code').value = code;
+
+        var xml_code = Blockly.Xml.workspaceToDom(workspace);
+        document.getElementById('id_tmp_xml_code').value = Blockly.Xml.domToPrettyText(xml_code);
+    }
+
+    function fromXML() {
+        var xml_input = document.getElementById('id_tmp_xml_code').value
+        var xml = Blockly.Xml.textToDom(xml_input);
+        Blockly.Xml.domToWorkspace(xml, workspace);
+    }
+
+    window.onload = function() {
+        fromXML();
+        workspace.addChangeListener(myUpdateFunction);
+        <!--HIDE THE CODE TEXTBOX-->
+          var labels = document.getElementsByTagName('label');
+          for(var i = 0; i < labels.length; i ++) {
+            var attr = labels[i].getAttribute('for');
+            if ((attr == 'id_tmp_code') || (attr == 'id_tmp_xml_code')){
+               labels[i].style.display = 'none';
+               document.getElementById(attr).style.display = 'none';
+            }
+          }
+    }
+
+</script>
+
+<br><br>
+{% crispy form%}
+{% endblock %}

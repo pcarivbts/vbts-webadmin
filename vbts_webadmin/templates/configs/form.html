@@ -1,0 +1,29 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Configs</h1>
+{% endblock %}
+{% block dashboard-content %}
+<p>
+<div class="row">
+  <div class="col-lg-2 text-right"><strong>Name</strong></div>
+  <div class="col-lg-8">{{ config.key|linebreaks }}</div>
+</div>
+</p>
+<p>
+<div class="row">
+  <div class="col-lg-2 text-right"><strong>Description</strong></div>
+  <div class="col-lg-8">{{ config.description|linebreaks }}</div>
+</div>
+</p>
+
+	{% crispy form%}
+{% endblock %}

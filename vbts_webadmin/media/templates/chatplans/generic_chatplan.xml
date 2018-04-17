@@ -1,0 +1,26 @@
+<!-- Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+-->
+<extension name="{{ service.keyword }}">
+    <condition field="vbts_tp_dest_address" expression="^{{ service.number }}$"/>
+    <condition field="${data_0}" expression="^{{ service.keyword }}$"/>
+    <!-- Check balance first -->
+    <condition field='${cond(${vbts_account_balance} > {{service.price}} ? YES : NO)}' expression="^YES$">
+        <action application="python" data='{{ service.script.fs_script }} {{ service.script_arguments.value }}'/>
+        <action application="python" data="VBTS_Send_SMS ${vbts_callerid}|${vbts_tp_dest_address}|${_result}"/>
+
+        <!-- action inline="true" application="set" data="call_tariff=${system(curl -d 'keyword={{keyword}}' http://127.0.0.1:7000/api/service/price)}"/ -->
+
+        <!-- SMS CDR call, to create SMS event, also causes to deduct credit from user -->
+        <action application="system" data='curl -d "from_number=${vbts_callerid}&from_name=${from_imsi}&service_type=local_services&destination=${vbts_tp_dest_address}&tariff={{service.price}}" http://127.0.0.1/smscdr'/>
+
+        <!-- Inform user that he/she has insufficient balance -->
+        <anti-action application="python" data="endaga_i18n Your account doesn't have sufficient funds to send an SMS."/>
+        <anti-action application="python" data="VBTS_Send_SMS ${vbts_callerid}|{{service.number}}|${_localstr}"/>
+        <anti-action application="set" data="service_type=error_sms"/>
+        <anti-action application="system" data='curl --data "from_number=${vbts_callerid}&from_name=${from_imsi}&service_type=${service_type}&destination=${vbts_tp_dest_address}" http://127.0.0.1/smscdr'/>
+    </condition>
+</extension>

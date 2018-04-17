@@ -1,0 +1,264 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{ promo.keyword }}</h1>
+    <h1>
+        <a href="{% url 'promos' %}" class="glyphicon glyphicon-arrow-left" title="Return to list"></a>
+        <a href="{% url 'promo_update' promo.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+        <a href="{% url 'promo_delete' promo.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+    </h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<br>
+<h3>Promo Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Name</strong></td>
+            <td>{{ promo.name }}
+            </td>
+
+
+        </tr>
+        <tr>
+			<td><strong>Keyword</strong></td>
+            <td>{{ promo.keyword }}
+            </td>
+
+
+        </tr>
+        <tr>
+			<td><strong>Shortcode Number</strong></td>
+            <td>{{ promo.number }}
+            </td>
+
+
+        </tr>
+        <tr>
+			<td><strong>Promo Type</strong></td>
+            <td>{{ promo.get_promo_type_display }}
+            </td>
+
+
+        </tr>
+		<tr>
+			<td><strong>Description</strong></td>
+			<td>{{ promo.description }}
+            </td>
+		</tr>
+		<tr>
+			<td><strong>Price</strong></td>
+			<td>Php {{ promo.price|div:100000|floatformat:2 }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Validity</strong></td>
+            <td>{{ promo.validity }} days
+            </td>
+
+
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<h3>Promo Bundle</h3>
+<div class="panel-default">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Local SMS</th>
+            <th>Local Calls</th>
+            <th>Globe SMS</th>
+            <th>Globe Calls</th>
+            <th>Off-Network SMS</th>
+            <th>Off-Network Calls</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% if promo.promo_type == 'D' or promo.promo_type == 'G' %}
+                <td>
+                    {% if promo.local_sms %}
+                        Php {{ promo.local_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if promo.local_call %}
+                        Php {{ promo.local_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if promo.globe_sms %}
+                        Php {{ promo.globe_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if promo.globe_call %}
+                        Php {{ promo.globe_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if promo.outside_sms %}
+                        Php {{ promo.outside_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if promo.outside_call %}
+                        Php {{ promo.outside_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+            {% elif promo.promo_type == 'U' %}
+                <td>{{ promo.local_sms|yesno:"Unlimited, No" }}
+                </td>
+                <td>{{ promo.local_call|yesno:"Unlimited, No" }}
+                </td>
+                <td>{{ promo.globe_sms|yesno:"Unlimited, No" }}
+                </td>
+                <td>{{ promo.globe_call|yesno:"Unlimited, No" }}
+                </td>
+                <td>{{ promo.outside_sms|yesno:"Unlimited, No" }}
+                </td>
+                <td>{{ promo.outside_call|yesno:"Unlimited, No" }}
+                </td>
+            {% else %}
+                <td>{{ promo.local_sms }} text messages
+                </td>
+                <td>{{ promo.local_call }} call minutes
+                </td>
+                <td>{{ promo.globe_sms }} text messages
+                </td>
+                <td>{{ promo.globe_call }} call minutes
+                </td>
+                <td>{{ promo.outside_sms }} text messages
+                </td>
+                <td>{{ promo.outside_call }} call minutes
+                </td>
+            {% endif %}
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<h3>Current Subscriptions</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+            <th>Contact</th>
+            <th>Local SMS</th>
+            <th>Local Calls</th>
+            <th>Globe SMS</th>
+            <th>Globe Calls</th>
+            <th>Off-Network SMS</th>
+            <th>Off-Network Calls</th>
+            <th>Expiration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for subscriber in subscription %}
+        <tr>
+            <td>
+                {% if 'Unregistered' in subscriber.contact.get_profile %}
+                        Unregistered VBTS number ({{ subscriber.contact.callerid}})
+                {% else %}
+                   <a href="{% url 'contact_detail' subscriber.contact.get_profile.id %}">{{ subscriber.contact.get_profile }}</a>
+                {% endif %}
+            </td>
+            {% if subscriber.promo.promo_type == 'D' or subscriber.promo.promo_type == 'G'%}
+                <td>{{ subscriber.local_sms|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ subscriber.local_call|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ subscriber.globe_sms|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ subscriber.globe_call|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ subscriber.outside_sms|div:100000|floatformat:2 }}
+                </td>
+                <td>{{ subscriber.outside_call|div:100000|floatformat:2 }}
+                </td>
+            {% elif subscriber.promo.promo_type == 'U' %}
+                <td>{{ subscriber.local_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.local_call|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.globe_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.globe_call|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.outside_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.outside_call|yesno:"Unlimited, No"  }}
+                </td>
+            {% else %}
+                <td>{{ subscriber.local_sms }}
+                </td>
+                <td>{{ subscriber.local_call }}
+                </td>
+                <td>{{ subscriber.globe_sms }}
+                </td>
+                <td>{{ subscriber.globe_call }}
+                </td>
+                <td>{{ subscriber.outside_sms }}
+                </td>
+                <td>{{ subscriber.outside_call }}
+                </td>
+            {% endif %}
+            <td>{{ subscriber.date_expiration }}</td>
+            <td><a href="{% url 'promo_delete_subscription' subscriber.id %}" class="glyphicon glyphicon-trash" title="Delete subscription"></a>
+            </td>
+
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if subscription.has_previous %}
+              <li><a href="?page={{ subscription.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in subscription.paginator.page_range %}
+              {% if subscription.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if subscription.has_next %}
+              <li><a href="?page={{ subscription.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

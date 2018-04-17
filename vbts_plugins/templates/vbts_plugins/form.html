@@ -1,0 +1,28 @@
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block content %}
+<h1 class="page-header"> Plugin </h1> 
+<br/>
+<div class="row">
+    <div class="col-md-10">
+    <h3>Details</h3>
+    <table class="table table-borderless">
+    <tr>
+        <td colspan="2">
+        <div>
+        {% crispy form%}
+        </div>
+        </td>
+    </tr>
+    </table>
+    </div>
+</div>
+{% endblock %}

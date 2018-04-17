@@ -1,0 +1,195 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load apptags %}
+{% load mathfilters%}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <h1 class="page-header">{{ service.name }}</h1>
+{% endblock %}
+
+{% block dashboard-header %}
+    <h1>
+		<a href="{% url 'services' %}" class="glyphicon glyphicon-arrow-left" title="Return to list"></a>
+		<a href="{% url 'service_update' service.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+        <a data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-envelope" title="Broadcast to subscribers"></a>
+        {% if service.status  == "P" %}
+        <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-remove" title="Unpublish"></a>
+        {% else %}
+        <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-ok" title="Publish"></a>
+        {% endif %}
+    </h1>
+{% endblock %}
+
+{% block dashboard-content %}
+
+<!-- Broadcaast Message Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">Broadcast a message to all {{service.name}}'s subscribers!</h3>
+      </div>
+      <div class="modal-body">
+        {% crispy form %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Un/Publish Modal-->
+<div id="statusModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">Change {{service.name}}'s status</h3>
+      </div>
+      <div class="modal-body">
+        <form method="post">{% csrf_token %}
+            Are you sure you want to {% if service.status == "P" %} unpublish {% else %} publish {% endif %} this service?
+            <input type="hidden" name="status" value={% if service.status  == "P" %}"U"{% else %}"P"{% endif%}/>
+            <input type="submit" value="Yes, I'm Sure." />
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<h3>Service Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Name</strong></td>
+            <td>{{ service.name }}</td>
+        </tr>
+		<tr>
+			<td><strong>Description</strong></td>
+			<td>{{ service.description }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Keyword</strong></td>
+			<td>{{ service.keyword }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Price per request</strong></td>
+			<td>Php {{ service.price|div:100000|floatformat:2 }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Type</strong></td>
+			<td>{{service.get_service_type_display}}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Shortcode Number</strong></td>
+			<td>{{ service.number }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Status
+            </strong></td>
+			<td>{{ service.get_status_display }}
+                {% if service.status  == "P" %}
+                    <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-remove" title="Unpublish"></a>
+                {% else %}
+                    <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-ok" title="Publish"></a>
+                {% endif %}
+                </a>
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Chatplan Filename</strong></td>
+			<td>{{ service.chatplan }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>FS Script</strong></td>
+			<td>{{ service.script }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Script Arguments
+                </strong></td>
+			<td>
+			    {% if service.script_arguments %}
+                <a href="{% url 'service_update_script_props' service.id %}" class="glyphicon glyphicon-pencil" title="Edit Properties">Edit</a>
+                {% for key, value in service.script_arguments.items %}
+                    {% if value|is_dict %}
+                        <p><b>{{key.upper}}
+                        </b></p>
+                        <div>
+                        {% for k, v in value.items %}
+                        <p><b>{{ k }}</b>:  {{ v }}</p>
+                         {% endfor %}
+                        </div>
+                    {% else %}
+                    <p><b>{{ key.upper }}</b>:  {{ value }}</p>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                    None
+                {% endif %}
+
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- <h3>Subscribers</h3>
+<div class="panel-default">
+    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>IMSI</th>
+                    <th>CallerID</th>
+                </tr>
+            </thead>
+    {% if service.subscribers.all %}
+        {% for subscriber in service.subscribers.all %}
+            <tbody>
+                <td>{{ subscriber.firstname}} {{ subscriber.lastname}}
+                </td>
+                <td>{{ subscriber.imsi }}
+                </td>
+                <td>{{ subscriber.callerid}}
+                </td>
+            </tbody>
+          </table>
+        {% endfor %}
+    {% else %}
+        <tbody>
+            <td>No subscribers yet.</td>
+            <td></td>
+            <td></td>
+        </tbody>
+    {% endif %}
+</div> -->
+
+
+{% endblock %}
+
+

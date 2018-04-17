@@ -1,0 +1,64 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">Service Events</h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Date</th>
+            <th>Subscriber</th>
+            <th>Event</th>
+            <th>Service</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for event in events %}
+        <tr>
+            <td>{{ event.date }}
+            </td>
+            <td><a href="{% url 'contact_detail' event.subscriber.callerid%}">{{ event.subscriber }}</a>
+            </td>
+            <td>{{ event.event }}
+            </td>
+	    	<td><a href="{% url 'service_detail' event.service.id %}">{{ event.service.keyword }}</a>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if events.has_previous %}
+              <li><a href="?page={{ events.previous_page_number }}">
+                  Previous</a></li>
+          {% endif %}
+          {% for pg in events.paginator.page_range %}
+              {% if events.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if events.has_next %}
+              <li><a href="?page={{ events.next_page_number }}">
+                  Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block content %}
+<h1 class="page-header">Plugins</h1>
+<br/>
+<div class="row">
+  <div class="col-lg-6">
+    <div>
+        <span>
+            <i class="fa fa-2x fa-upload"></i>
+            <a href="{% url 'pcari_plugin_upload' %}" class="add-circle btn btn-info" role="button">Upload Plugin</a>
+		</span>
+		&nbsp;
+		<span>
+		</span>
+    </div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+        <span>
+        &nbsp; <br/>
+        </span>
+        {% crispy search_form%}
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Plugin Name</th>
+            <th>Description</th>
+            <th>Version</th>
+            <th>Author</th>
+            <th>Package</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if plugins %}
+        {% for plugin in plugins %}
+        <tr>
+            <td><a href="{% url 'pcari_plugin_detail' plugin.id %}">{{ plugin.name }}</a>
+            </td>
+            <td> {{ plugin.description|truncatechars:50 }}
+            </td>
+             <td>{{ plugin.version }}
+            </td>
+             <td>{{ plugin.author }}
+            </td>
+             <td>{{ plugin.get_filename }}
+            </td>
+            <td>
+                <span class="pull-right">
+                <a href="{% url 'pcari_plugin_update' plugin.id %}" class=" glyphicon glyphicon-pencil" title="Edit"></a>
+                <a href="{% url 'pcari_plugin_delete' plugin.id %}" class="glyphicon glyphicon-trash"></a>
+                </span>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="2">
+            No result found.
+            </td>
+        </tr>
+        {% endif %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if plugins.has_previous %}
+              <li><a href="?page={{ plugins.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in plugins.paginator.page_range %}
+              {% if plugins.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if plugins.has_next %}
+              <li><a href="?page={{ plugins.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,449 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-29 08:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: vbts_webadmin/fields.py:11
+msgid "Enter values separated by commas."
+msgstr "I-type ang mga entry na pinaghihiwalay ng mga kuwit."
+
+#: vbts_webadmin/settings/base.py:114
+msgid "English"
+msgstr "Ingles"
+
+#: vbts_webadmin/settings/base.py:115
+msgid "Tagalog"
+msgstr "Tagalog"
+
+#: vbts_webadmin/views/api.py:82
+msgid "You are now listed in the VBTS database."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:114 vbts_webadmin/views/api.py:180
+#: vbts_webadmin/views/api.py:255 vbts_webadmin/views/api.py:300
+msgid "You are currently not registered to the BTS. Please register."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:125 vbts_webadmin/views/api.py:191
+#: vbts_webadmin/views/api.py:311
+msgid "Sorry we can't process your request. Invalid keyword."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:138
+#, python-format
+msgid "You have successfully sent a report to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:145
+#, python-format
+msgid "New report from %(manager)s. %(keyword)s:%(msg)s"
+msgstr ""
+
+#: vbts_webadmin/views/api.py:201
+#, python-format
+msgid "You are already subscribed to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:209
+#, python-format
+msgid "You do not have sufficient balance to subscribe to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:224
+#, python-format
+msgid "You have successfully subscribed to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:266
+#, python-format
+msgid "You have successfully unsubscribed to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:271
+msgid "You are not currently subscribed to the service."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:321
+#, python-format
+msgid "You are subscribed to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:327
+#, python-format
+msgid "You are not subscribed to %s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:416
+msgid "Sorry we can't process your request. Invalid service."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:426
+#, python-format
+msgid "ANNOUNCEMENT: %s"
+msgstr ""
+
+#: vbts_webadmin/views/api.py:431
+#, python-format
+msgid "You are not allowed to send message to %s's subscribers."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:463
+msgid "You are not listed in the PCARI-VBTS database. Please register."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:482 vbts_webadmin/views/api.py:492
+msgid "You have to many promo subscriptions."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:502
+msgid "You made a bad promo request."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:510
+#, python-format
+msgid "You do not have sufficient balance to subscribe to the %s promo."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:539
+#, python-format
+msgid "You are now subscribed to %(keyword)s valid until %(expiry)s."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:870 vbts_webadmin/views/api.py:905
+#, python-format
+msgid "You have no %s subscriptions."
+msgstr ""
+
+#: vbts_webadmin/views/api.py:911
+#, python-format
+msgid "You are now unsubscribed from your %s promos."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:94
+msgid "You have too many groups and have exceeded the allowed limits."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:103
+msgid "You did not input any member contact numbers."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:125
+#, python-format
+msgid "Your group %s has been successfully created."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:129 vbts_webadmin/views/api_groups.py:196
+#, python-format
+msgid "Failed to add the following to group %(group)s. %(invalid)s"
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:171
+#, python-format
+msgid "Requested group %s does not exist."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:181
+#, python-format
+msgid "You can only edit the group %s once in every 30 days."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:192
+#, python-format
+msgid "Your group %s has been successfully edited."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:230
+#, python-format
+msgid "Successfully deleted group %s."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:235
+#, python-format
+msgid "Failed to delete group %s."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:271
+msgid "FORBIDDEN. You are not a member of this group."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:297
+#, python-format
+msgid "Failed to send your message to: %s."
+msgstr ""
+
+#: vbts_webadmin/views/api_groups.py:301
+msgid "Successfully sent your message to the group."
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:57 vbts_webadmin/views/circles.py:79
+msgid "Maximum 140 characters. Members won't be able to reply."
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:119 vbts_webadmin/views/configs.py:53
+#: vbts_webadmin/views/contacts.py:117 vbts_webadmin/views/groups.py:47
+#: vbts_webadmin/views/inforequests.py:53 vbts_webadmin/views/ivrs.py:73
+#: vbts_webadmin/views/messages.py:76 vbts_webadmin/views/promos.py:241
+#: vbts_webadmin/views/pushmessages.py:55 vbts_webadmin/views/reports.py:92
+#: vbts_webadmin/views/scripts.py:27 vbts_webadmin/views/services.py:213
+#: vbts_webadmin/views/subscribers.py:30
+#, python-format
+msgid "You've searched for: '%s'"
+msgstr "Ang resulta para sa: '%s'"
+
+#: vbts_webadmin/views/circles.py:165
+#, python-format
+msgid "You've successfully broadcasted to  %s's members."
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:180
+#, python-format
+msgid "You've successfully created circle '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:197
+#, python-format
+msgid "You've successfully updated circle '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:209
+#, python-format
+msgid "You've successfully deleted circle '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/circles.py:234
+msgid "You've successfully broadcasted                 the message."
+msgstr ""
+
+#: vbts_webadmin/views/configs.py:92
+#, python-format
+msgid "You've successfully created config '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/configs.py:106
+#, python-format
+msgid "You've successfully updated config '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/configs.py:118
+#, python-format
+msgid "You've successfully deleted config '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:56
+msgid "Please input a valid caller ID."
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:164
+#, python-format
+msgid "You've successfully created contact '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:176
+#, python-format
+msgid "You've successfully updated contact '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:187
+#, python-format
+msgid "You've successfully deleted contact '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:212
+#, python-format
+msgid ""
+"You are automatically subscribed to %(promo)s promo. To opt out, text "
+"%(keyword)s REMOVE to 555."
+msgstr ""
+
+#: vbts_webadmin/views/contacts.py:221
+#, python-format
+msgid "You've successfully added '%(promo)s' promo to contact '%(contact)s.'"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:21
+msgid "Email"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:22
+msgid "First name"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:23
+msgid "Last name"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:24
+msgid "Language"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:79
+msgid "Your password was successfully updated!"
+msgstr ""
+
+#: vbts_webadmin/views/dashboard.py:112
+msgid "You've successfully updated your profile."
+msgstr ""
+
+#: vbts_webadmin/views/documents.py:100
+#, fuzzy, python-format
+#| msgid "You've searched for: '%s'"
+msgid "You've searched for: \"%s\""
+msgstr "Ang resulta para sa: '%s'"
+
+#: vbts_webadmin/views/documents.py:131
+msgid "You've successfully created the document."
+msgstr ""
+
+#: vbts_webadmin/views/documents.py:145
+msgid "You've successfully uploaded a document"
+msgstr ""
+
+#: vbts_webadmin/views/documents.py:159
+msgid "You've successfully updated the document."
+msgstr ""
+
+#: vbts_webadmin/views/documents.py:174
+msgid "You've successfully deleted document."
+msgstr ""
+
+#: vbts_webadmin/views/inforequests.py:103
+#, python-format
+msgid ""
+"You've successfully sent             the message '%(msg)s' to %(keyword)s's "
+"subscribers."
+msgstr ""
+
+#: vbts_webadmin/views/ivrs.py:120
+#, python-format
+msgid "You've successfully created IVR '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/ivrs.py:133
+#, python-format
+msgid "You've successfully updated IVR '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/ivrs.py:149
+#, python-format
+msgid "You've successfully deleted IVR '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/messages.py:133
+#, python-format
+msgid "You've successfully sent the message '%s'."
+msgstr ""
+
+#: vbts_webadmin/views/plugins.py:147
+#, python-format
+msgid "You've successfully installed the plugin '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/plugins.py:176
+#, python-format
+msgid "You've successfully uninstalled the plugin '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:300
+#, python-format
+msgid "You've successfully created promo '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:304 vbts_webadmin/views/promos.py:318
+msgid "Please input the required fields below."
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:314
+#, python-format
+msgid "You've successfully updated promo '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:327
+#, python-format
+msgid "You've successfully deleted promo '%s.'"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:390
+msgid "What do you want to do?"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:394
+msgid "Upload your CSV file containing data"
+msgstr ""
+
+#: vbts_webadmin/views/promos.py:482
+msgid "Batch operation completed successfully."
+msgstr ""
+
+#: vbts_webadmin/views/pushmessages.py:106
+#, python-format
+msgid ""
+"You've successfully sent the message '%(msg)s' to %(keyword)s's subscribers."
+msgstr ""
+
+#: vbts_webadmin/views/reports.py:61 vbts_webadmin/views/services.py:139
+#: vbts_webadmin/views/services.py:155
+msgid "This field is required."
+msgstr ""
+
+#: vbts_webadmin/views/reports.py:132
+#, python-format
+msgid "You've successfully created '%s' report."
+msgstr ""
+
+#: vbts_webadmin/views/reports.py:150
+#, python-format
+msgid "You've successfully updated '%s' report."
+msgstr ""
+
+#: vbts_webadmin/views/reports.py:175
+#, python-format
+msgid "You've successfully %(status)s '%(report)s' report."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:46
+msgid "Maximum 140 characters. Subscribers won't be able to reply."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:261
+#, python-format
+msgid "You've successfully broadcasted to %s's subscribers"
+msgstr ""
+
+#: vbts_webadmin/views/services.py:288
+#, python-format
+msgid "You've successfully created '%s' service."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:300
+#, python-format
+msgid "You've successfully deleted '%s' service."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:314
+#, python-format
+msgid "You've successfully %(status)s '%(service)s' service."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:330 vbts_webadmin/views/services.py:358
+#, python-format
+msgid "You've successfully updated '%s' service."
+msgstr ""
+
+#: vbts_webadmin/views/services.py:343
+#, python-format
+msgid "You've successfully reset '%s' service."
+msgstr ""

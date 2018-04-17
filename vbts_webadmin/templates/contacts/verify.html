@@ -1,0 +1,114 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel panel-danger">
+      <div class="panel-heading"><h3>Data Conflict Warning!</h3></div>
+      <div class="panel-body">
+          <form method="post">{% csrf_token %}
+            <p>
+                We found conflicts for the following entries on your CSV file.
+                It seems that you are attempting to change the SIM-User relationship.
+                Correct your CSV and try again. Otherwise, you may contact Level 3 support.
+            </p>
+             {% comment %}
+            <input class="btn btn-primary" type="submit" value="Sure" />
+              {% endcomment %}
+            <a class="btn btn-default" href="{% url 'contacts' %}" /> Return </a>
+        </form>
+      </div>
+</div>
+
+<br>
+<div class="alert alert-warning">
+  <strong></strong> Data from CSV file.
+</div>
+
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>UUID</th>
+            <th>Name</th>
+            <th>Nickname</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Municipality</th>
+            <th>Barangay</th>
+            <th>Sitio</th>
+            <th>Caller ID</th>
+            <th>IMSI</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for item in list %}
+        <tr>
+            <td>{{item.8}}</td>
+            <td>{{item.0}} {{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td>{{item.4}}</td>
+            <td>{{item.5}}</td>
+            <td>{{item.6}}</td>
+            <td>{{item.7}}</td>
+            <td>{{item.9}}</td>
+            <td>{{item.10}}</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div class="alert alert-warning">
+  <strong></strong> Data from Database.
+</div>
+
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>UUID</th>
+            <th>Name</th>
+            <th>Nickname</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Municipality</th>
+            <th>Barangay</th>
+            <th>Sitio</th>
+            <th>Caller ID</th>
+            <th>IMSI</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for item in conflict %}
+        <tr>
+            <td>{{item.0}}</td>
+            <td>{{item.1}} {{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td>{{item.4}}</td>
+            <td>{{item.5}}</td>
+            <td>{{item.6}}</td>
+            <td>{{item.7}}</td>
+            <td>{{item.8}}</td>
+            <td>{{item.9}}</td>
+            <td>{{item.10}}</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+

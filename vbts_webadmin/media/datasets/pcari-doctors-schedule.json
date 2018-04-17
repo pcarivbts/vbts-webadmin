@@ -1,0 +1,14 @@
+[
+  {
+    "Doctor": "Dra. Juan dela Cruz",
+    "Schedule": "TTH 9-12pm",
+    "Specialization": "Pediatrician",
+    "Hospital": "Dingalan Hospital"
+  },
+  {
+    "Doctor": "Dra. Maria Clara",
+    "Schedule": "TTH 9-12pm",
+    "Specialization": "ENT",
+    "Hospital": "Dingalan Hospital"
+  }
+]

@@ -1,0 +1,96 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Circles</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+		<span>
+			<i class="fa fa-2x fa-users"></i>
+			<a href="{% url 'circle_new' %}" class="add-circle btn btn-info" role="button">Create circle</a>
+		</span>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if circles %}
+        {% for circle in circles %}
+        <tr>
+            <td><a href="{% url 'circle_detail' circle.id %}" title="View Details">{{ circle.name }}</a>
+            </td>
+            <td>{% if circle.description %} {{circle.description}}
+                {% else %} No description available.
+                {% endif %}
+            </td>
+            <!-- <td>{% for user in circle.users.all %}
+            	{% if forloop.counter <= 5 %}
+            	<span class="label label-primary">
+					{{ user.get_name_callerid }}
+            	</span><span>&nbsp;</span>
+            	{% endif %}
+	    		{% endfor %}
+	    	</td> -->
+	    	<td>
+	    		<span class="pull-right">
+	    		<a href="{% url 'circle_broadcast' circle.id %}" class="glyphicon glyphicon-envelope" title="Send a messsage"></a>&nbsp;
+				<a href="{% url 'circle_update' circle.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>&nbsp;
+				<a href="{% url 'circle_delete' circle.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>&nbsp;
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+		{% else %}
+            <tr>
+                <td colspan="4">
+                No result found.
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if circles.has_previous %}
+              <li><a href="?page={{ circles.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in circles.paginator.page_range %}
+              {% if circles.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if circles.has_next %}
+              <li><a href="?page={{ circles.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

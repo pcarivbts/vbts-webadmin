@@ -1,0 +1,50 @@
+{% comment %}
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+{% endcomment %}
+<h1> VBTS Report Generator </h1>
+<hr>
+<div>
+<table>
+    <thead>
+        <tr>
+            <td><b>Report</b></td>
+            <td><b>Keyword</b></td>
+            <td><b>Number</b></td>
+            <td><b>Message</b></td>
+            <td><b>Date</b></td>
+            <td><b>Manager</b></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for report in reports %}
+    	<tr>
+    		<td>
+    		<a href="{% url 'report_detail' report.id %}" >
+    		{{ report.name }}</a>
+    		</td>
+    		<td>{{ report.keyword }}
+    		</td>
+    		<td>{{ report.number }}
+    		</td>
+    		<td>{{ report.message }}
+    		</td>
+    		<td>{{ report.date }}
+    		</td>
+    		<td>
+    		   {% for manager in report.managers.all %}
+			   {% if not forloop.first %}, {% endif %}
+				<p>{{ manager }} </p>
+    		   {% endfor %}
+    		</td>
+    		<td>
+	    	</td>
+		</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

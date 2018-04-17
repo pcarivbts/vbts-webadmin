@@ -1,0 +1,19 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Create new circles</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="placeholder">
+	{% crispy form %}
+</div>
+{% endblock %}
+    
+			

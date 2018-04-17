@@ -1,0 +1,58 @@
+{% comment %}
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+{% endcomment %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand">
+      	PCARI-VBTS
+      </a>
+    </div>
+	<div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'dashboard' %}"><i class="fa fa-fw fa-home"></i>Home</a>
+                    </li>
+                    <!-- <li><a href="/news"><i class="fa fa-fw fa-newspaper-o"></i>News</a>
+                    </li> -->
+                    <!-- <li><a href="/pcari-vbts">About</a>
+                    </li> -->
+                    <!-- <li><a href="/contact-us"><i class="fa fa-fw fa-envelope"></i>Contact Us</a>
+                    </li> -->
+                    {% if user.is_authenticated %}
+                    <li class="dropdown">
+		            	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-dashboard"></i>Dashboard<span class="caret"></span></a>
+		            	<ul class="dropdown-menu" role="menu">
+		            	<li><a href="{% url 'circles' %}"><i class="fa fa-fw fa-circle"></i>Circles</a></li>
+		            	<li><a href="{% url 'contacts' %}"><i class="fa fa-fw fa-user"></i>Contacts</a></li>
+		                <li><a href="{% url 'documents' %}"><i class="fa fa-fw fa-file"></i>Documents</a></li>
+                    	<li><a href="{% url 'groups' %}"><i class="fa fa-fw fa-group"></i>Groups</a></li>
+                        <li><a href="{% url 'ivrs' %}"><i class="fa fa-fw fa-tty"></i>IVRs</a></li>
+                        <li><a href="{% url 'messages' %}"><i class="fa fa-fw fa-envelope"></i>Messages</a></li>
+		                <li><a href="{% url 'scripts' %}"><i class="fa fa-fw fa-plug"></i>Plugins</a></li>
+                    	<li><a href="{% url 'promos' %}"><i class="fa fa-fw fa-rouble"></i>Promos</a></li>
+		            	<li><a href="{% url 'reports' %}"><i class="fa fa-fw fa-exclamation-triangle"></i>Reports</a></li>
+		            	<li><a href="{% url 'services' %}"><i class="fa fa-fw fa-phone-square"></i>&nbsp;Services</a></li>
+                        <li><a href="{% url 'configs' %}"><i class="fa fa-fw fa-gears"></i>Configs</a></li>
+		                </ul>
+		            </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i>{{ user.username|upper }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                        <li><a href="{% url 'profile' %}"><i class="fa fa-fw fa-gear"></i>Profile</a></li>
+                        <li><a href="{% url 'change_password' %}"><i class="fa fa-fw fa-key"></i>Change Password</a></li>
+                        <li><a href="/logout"><i class="fa fa-fw fa-power-off"></i>Logout</a>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+
+                </ul>
+     </div>
+  </div><!-- /.container-fluid -->
+</nav>

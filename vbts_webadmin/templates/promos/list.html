@@ -1,0 +1,127 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">Promos</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+		<span>
+			<i class="fa fa-2x fa-dollar"></i>
+			<a href="{% url 'promo_new' %}" class="add-circle btn btn-info" role="button">Create Promo</a>
+            <i class="fa fa-2x fa-user"></i>
+            <a href="{% url 'promo_view_subscriptions' %}" class="add-circle btn btn-info" role="button">View All Subscriptions</a>
+            <a href="{% url 'promo_upload_csv' %}" class="add-circle btn btn-info" role="button">Batch Process</a>
+		</span>
+		&nbsp;
+		<span>
+		</span>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Keyword</th>
+            <th>Number</th>
+            <th>Price</th>
+            <!--<th>Local SMS</th>-->
+            <!--<th>Local Calls</th>-->
+            <!--<th>Off-Network SMS</th>-->
+            <!--<th>Off-Network Calls</th>-->
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for promo in promos %}
+        <tr>
+            <td><a href="{% url 'promo_detail' promo.id %}" title="View Details" >
+	    		{{ promo.name }}</a>
+            </td>
+            <td>{{ promo.get_promo_type_display }}
+            </td>
+            <td>{{ promo.keyword }}
+            </td>
+            <td> {{ promo.number }}
+            <td> &#8369; {{ promo.price|div:100000|floatformat:2 }}
+            </td>
+            </td>
+            <!--{% if promo.promo_type == 'D' or promo.promo_type == 'G' %}-->
+                <!--<td>{{ promo.local_sms|div:100000|floatformat:2 }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.local_call|div:100000|floatformat:2 }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_sms|div:100000|floatformat:2 }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_call|div:100000|floatformat:2 }}-->
+                <!--</td>-->
+            <!--{% elif promo.promo_type == 'U' %}-->
+                <!--<td>{{ promo.local_sms|yesno:"Yes, No" }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.local_call|yesno:"Yes, No" }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_sms|yesno:"Yes, No" }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_call|yesno:"Yes, No" }}-->
+                <!--</td>-->
+            <!--{% else %}-->
+                <!--<td>{{ promo.local_sms }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.local_call }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_sms }}-->
+                <!--</td>-->
+                <!--<td>{{ promo.outside_call }}-->
+                <!--</td>-->
+            <!--{% endif %}-->
+	    	<td>
+	    		<span class="pull-right">
+                <a href="{% url 'promo_update' promo.id %}" class=" glyphicon glyphicon-pencil" title="Edit"></a>
+                <a href="{% url 'promo_delete' promo.id %}" class=" glyphicon glyphicon-trash" title="Delete"></a>
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if promos.has_previous %}
+              <li><a href="?page={{ promos.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in promos.paginator.page_range %}
+              {% if promos.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if promos.has_next %}
+              <li><a href="?page={{ promos.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}
+

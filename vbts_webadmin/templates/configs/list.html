@@ -1,0 +1,73 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Configs</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for config in configs %}
+        <tr>
+            <td><a href="{% url 'config_detail' config.pk %}">{{ config.key }}</a>
+            </td>
+            <td>{{ config.value }}
+            </td>
+
+	    	<td>
+	    		<span class="pull-right">
+				<a href="{% url 'config_update' config.pk %}" class="glyphicon glyphicon-pencil"></a>
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if configs.has_previous %}
+              <li><a href="?page={{ configs.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in configs.paginator.page_range %}
+              {% if configs.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if configs.has_next %}
+              <li><a href="?page={{ configs.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

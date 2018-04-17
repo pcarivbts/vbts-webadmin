@@ -1,0 +1,71 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <h1 class="page-header">Edit Service</h1>
+{% endblock %}
+{% block dashboard-content %}
+		{% crispy form%}
+{% endblock %}
+
+{% block extra_javascript %}
+<script>
+    function Hide(){
+    var promo_type = $('#id_service_type').find(":selected").val();
+    if (promo_type == 'P'){  //PUSH MESSAGE
+        $('#sked').show();
+    }
+    else {
+        $('#sked').hide();
+    }
+}
+
+window.onload = function() {
+    Hide();
+    document.getElementById('id_service_type').onchange = Hide;
+}
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var max_fields      = 20;
+    var wrapper         = $(".json_input_fields_wrap");
+    var add_button      = $("#add_field_button");
+    var x = 1;
+    $(add_button).click(function(e){
+        e.preventDefault();
+        if(x < max_fields){
+            x++;
+            var row = $(this).closest('tr');
+            var prev = row.prev();
+            var clone = prev.clone();
+            clone.insertAfter(prev);
+            clone.find("input").each(function() {
+                $input = $(this)
+                $input.val("");
+                $input.prop("value", "");
+                $input.focus();
+            });
+
+        }
+    });
+    $(wrapper).on("click",".remove_field", function(e){
+        $tr = $(this).closest("tr")
+        $tr.find("input").each(function() {
+            $input = $(this)
+            $input.prop("disabled", true);
+            $input.removeAttr("name");
+            $input.focus();
+        });
+    })
+});
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Documents</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+    <div>
+        <span>
+			<i class="fa fa-2x fa-edit"></i>
+			<a href="{% url 'document_new' %}" class="add-circle btn btn-info" role="button">Create Document</a>
+            <i class="fa fa-2x fa-upload"></i>
+            <a href="{% url 'document_upload' %}" class="add-circle btn btn-info" role="button">Upload Document</a>
+		</span>
+		&nbsp;
+		<span>
+		</span>
+    </div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+        <span>
+        &nbsp; <br/>
+        </span>
+        {% crispy search_form%}
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Filename</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if documents %}
+        {% for document in documents %}
+        <tr>
+            <td><a href="{% url 'document_detail' document.id %}">{{ document.name }}</a>
+            </td>
+            <td>{{ document.description|truncatechars:50 }}
+            </td>
+            <td>{{ document.docfile.name|slice:"10:" }}
+            </td>
+            <td>
+                <span class="pull-right">
+                <a href="{% url 'document_delete' document.id %}" class="glyphicon glyphicon-trash"></a>
+                </span>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="2">
+            No result found.
+            </td>
+        </tr>
+        {% endif %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if documents.has_previous %}
+              <li><a href="?page={{ documents.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in documents.paginator.page_range %}
+              {% if documents.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if documents.has_next %}
+              <li><a href="?page={{ documents.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

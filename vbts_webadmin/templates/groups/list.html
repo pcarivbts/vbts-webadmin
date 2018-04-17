@@ -1,0 +1,85 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Family & Friends</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+        <a href="{% url 'group_upload_csv' %}" class="add-circle btn btn-info" role="button">Batch Process</a>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Group Name</th>
+            <th>Subscriber</th>
+            <th>F&F Members</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for group in groups %}
+        <tr>
+            <td><a href="{% url 'group_detail' group.id %}">{{ group.name }}</a>
+            </td>
+            <td>{{ group.owner.get_profile }}
+            </td>
+            <td>{% for member in group.members.all %}
+                <span class="label label-primary">
+                {% if "OFFNET" in member.imsi %}
+                    {{ member.callerid }}
+                {% else %}
+					{{ member.get_profile }}
+                {% endif %}
+                </span>
+	    		{% endfor %}
+	    	</td>
+            <td>
+                <span class="pull-right">
+                <a href="{% url 'group_delete' group.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+                </span>
+            </td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if groups.has_previous %}
+              <li><a href="?page={{ groups.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in groups.paginator.page_range %}
+              {% if groups.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if groups.has_next %}
+              <li><a href="?page={{ groups.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}
+

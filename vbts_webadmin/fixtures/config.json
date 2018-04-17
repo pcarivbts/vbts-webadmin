@@ -1,0 +1,65 @@
+[
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 1,
+    "fields": {
+      "key": "max_call_duration",
+      "value": "1200",
+      "description": "This is the maximum call length (in seconds) that the user can do. If the value for this configuration key is 0, then all calls will have a maximum duration of one day."
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 2,
+    "fields": {
+      "key": "max_promo_subscription",
+      "value": "1",
+      "description": "Max number of promo subscriptions per subscriber."
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 3,
+    "fields": {
+      "key": "promo_limit_type",
+      "value": "NA",
+      "description": "Promo limit type: Possible options: [A, B, NA] \n A - Limit number of subscription per promo \n B - Limit number of subscription for all promos  \n NA - No Limits \nThe upper limit on the number of allowed subscriptions is defined by the key 'max_promo_subscription' "
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 4,
+    "fields": {
+      "key": "max_groups_per_subscriber",
+      "value": "NA",
+      "description": "Maximum number of groups that a subscriber can create.\nPut 'NA' for unlimited."
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 5,
+    "fields": {
+      "key": "min_balance_required",
+      "value": "0",
+      "description": "Minimum balance required that a subscriber must have in order to avail a promo. Default value is 0."
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 6,
+    "fields": {
+      "key": "group_edit_interval",
+      "value": "30",
+      "description": "Allowed interval (in days) in which a mobile subscriber can edit his/her group members."
+    }
+  },
+  {
+    "model": "vbts_webadmin.config",
+    "pk": 7,
+    "fields": {
+      "key": "promo_req_min_balance",
+      "value": "0",
+      "description": "This is the required maintaining balance to be able to do calls and texts under a promo."
+    }
+  }
+]

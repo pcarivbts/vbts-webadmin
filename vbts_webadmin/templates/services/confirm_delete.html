@@ -1,0 +1,97 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <!--<h1 class="page-header">{{ service.name }}</h1>-->
+{% endblock %}
+{% block dashboard-header %}
+    <!--<h1>-->
+        <!--<a href="{% url 'service_detail' service.id %}" class="glyphicon glyphicon-arrow-left" title="Return to details"></a>-->
+        <!--<a href="{% url 'service_update' service.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>-->
+        <!--<a href="{% url 'services' %}" class="glyphicon glyphicon-list-alt" title="Return to list"></a>-->
+    <!--</h1>-->
+{% endblock %}
+
+{% block dashboard-content %}
+
+<div class="panel panel-danger">
+  <div class="panel-heading"><h3>Permanently remove {{service.name}}?</h3></div>
+  <div class="panel-body">
+      <form method="post">{% csrf_token %}
+        <p>Are you sure you want to delete this service?</p>
+        <input class="btn btn-primary" type="submit" value="Sure" />
+        <a class="btn btn-default" href="{% url 'services' %}" /> Cancel </a>
+    </form>
+  </div>
+</div>
+
+<!--<h3>Service Details</h3>-->
+<!--<div class="panel-default">-->
+  <!--<table class="table table-hover">-->
+    <!--<thead>-->
+        <!--&lt;!&ndash;Empty Headers&ndash;&gt;-->
+    <!--</thead>-->
+    <!--<tbody>-->
+        <!--<tr>-->
+			<!--<td><strong>Name</strong></td>-->
+            <!--<td>{{ service.name }}-->
+            <!--</td>-->
+        <!--</tr>-->
+		<!--<tr>-->
+			<!--<td><strong>Description</strong></td>-->
+			<!--<td>{{ service.description }}-->
+            <!--</td>-->
+		<!--</tr>-->
+        <!--<tr>-->
+			<!--<td><strong>Keyword</strong></td>-->
+			<!--<td>{{ service.keyword }}-->
+            <!--</td>-->
+		<!--</tr>-->
+        <!--<tr>-->
+			<!--<td><strong>Shortcode Number</strong></td>-->
+			<!--<td>{{ service.number }}-->
+            <!--</td>-->
+		<!--</tr>-->
+    <!--</tbody>-->
+  <!--</table>-->
+<!--</div>-->
+
+
+<!--<h3>Subscribers</h3>-->
+<!--<div class="panel-default">-->
+    <!--<table class="table table-striped">-->
+            <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Name</th>-->
+                    <!--<th>IMSI</th>-->
+                    <!--<th>CallerID</th>-->
+                <!--</tr>-->
+            <!--</thead>-->
+    <!--{% if service.subscribers.all %}-->
+        <!--{% for subscriber in service.subscribers.all %}-->
+            <!--<tbody>-->
+                <!--<td>{{ subscriber.firstname}} {{ subscriber.lastname}}-->
+                <!--</td>-->
+                <!--<td>{{ subscriber.imsi }}-->
+                <!--</td>-->
+                <!--<td>{{ subscriber.callerid}}-->
+                <!--</td>-->
+            <!--</tbody>-->
+          <!--</table>-->
+        <!--{% endfor %}-->
+    <!--{% else %}-->
+        <!--<tbody>-->
+            <!--<td>No subscribers yet.</td>-->
+        <!--</tbody>-->
+    <!--{% endif %}-->
+<!--</div>-->
+
+
+{% endblock %}

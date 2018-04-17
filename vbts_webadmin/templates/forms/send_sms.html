@@ -1,0 +1,40 @@
+{% comment %}
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+{% endcomment %}
+<div id="form_send_sms" class="form_send_sms mfp-hide white-popup-block" width="600px">
+<form id="send_sms" class="form-horizontal">
+    <fieldset>
+
+        <legend>Broadcast Message</legend>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="recipients">Recipients</label>
+            <div class="col-md-7">
+                <input class="form-control input-md" id="recipients" name="recipients"
+                    disabled="true" type="text"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="message">Message</label>
+                <div class="col-md-7">
+                    <textarea class="form-control" id="message" name="message"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;160 character(s)</p>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="btn_send_sms"></label>
+                <div class="col-md-7">
+                    <button class="btn btn-primary" id="btn_send_sms" name="btn_send_sms">Send Message</button>
+                </div>
+            </div>
+
+        </fieldset>
+</form>
+</div>    

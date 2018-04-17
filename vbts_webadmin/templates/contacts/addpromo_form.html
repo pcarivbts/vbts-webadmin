@@ -1,0 +1,18 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery/jquery-ui-1.10.4.custom.min.js' %}"></script>
+    <h1 class="page-header">Add promo to contact</h1>
+{% endblock %}
+{% block dashboard-content %}
+    {% crispy form%}
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">All Promo Subscriptions</h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Contact</th>
+            <th>Promo</th>
+            <th>Type</th>
+            <th>Local SMS</th>
+            <th>Local Calls</th>
+            <th>Globe SMS</th>
+            <th>Globe Calls</th>
+            <th>Off-Network SMS</th>
+            <th>Off-Network Calls</th>
+            <th>Expiration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for subscriber in subscription %}
+        <tr>
+            <td>
+                {% if 'Unregistered' in subscriber.contact.get_profile %}
+                        Unregistered VBTS number ({{ subscriber.contact.callerid}})
+                {% else %}
+                   <a href="{% url 'contact_detail' subscriber.contact.get_profile.id %}">{{ subscriber.contact.get_profile }}</a>
+                {% endif %}
+            </td>
+            <td>{{ subscriber.promo.keyword}}
+            </td>
+            <td>{{ subscriber.promo.promo_type}}
+            </td>
+            {% if subscriber.promo.promo_type == 'D' or subscriber.promo.promo_type == 'G' %}
+                <td>
+                    {% if subscriber.local_sms %}
+                        Php {{ subscriber.local_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if subscriber.local_call %}
+                        Php {{ subscriber.local_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if subscriber.globe_sms %}
+                        Php {{ subscriber.globe_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if subscriber.globe_call %}
+                        Php {{ subscriber.globe_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if subscriber.outside_sms %}
+                        Php {{ subscriber.outside_sms|div:100000|floatformat:2 }} per text
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+                <td>
+                    {% if subscriber.outside_call %}
+                        Php {{ subscriber.outside_call|div:100000|floatformat:2 }} per min
+                    {% else %}
+                        NA
+                    {% endif %}
+                </td>
+            {% elif subscriber.promo.promo_type == 'U' %}
+                <td>{{ subscriber.local_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.local_call|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.globe_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.globe_call|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.outside_sms|yesno:"Unlimited, No"  }}
+                </td>
+                <td>{{ subscriber.outside_call|yesno:"Unlimited, No"  }}
+                </td>
+            {% else %}
+                <td>{{ subscriber.local_sms }}
+                </td>
+                <td>{{ subscriber.local_call }}
+                </td>
+                <td>{{ subscriber.globe_sms }}
+                </td>
+                <td>{{ subscriber.globe_call }}
+                </td>
+                <td>{{ subscriber.outside_sms }}
+                </td>
+                <td>{{ subscriber.outside_call }}
+                </td>
+            {% endif %}
+	    	<td>{{ subscriber.date_expiration }}
+	    	</td>
+            <td><a href="{% url 'promo_delete_subscription' subscriber.id %}?from={{ request.path|urlencode }}"
+                   class="glyphicon glyphicon-trash" title="Delete subscription"></a>
+            </td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if subscription.has_previous %}
+              <li><a href="?page={{ subscription.previous_page_number }}">
+                  Previous</a></li>
+          {% endif %}
+          {% for pg in subscription.paginator.page_range %}
+              {% if subscription.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if subscription.has_next %}
+              <li><a href="?page={{ subscription.next_page_number }}">
+                  Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

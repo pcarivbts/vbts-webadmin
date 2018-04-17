@@ -1,0 +1,53 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load apptags %}
+{% block dashboard-header %}
+{% endblock %}
+{% block dashboard-content %}
+<div class="panel panel-danger">
+      <div class="panel-heading"><h3>Install <b> {{ script.name }}?</b></h3></div>
+      <div class="panel-body">
+                <p>Are you sure you want to install this plugin?</p>
+                <table class="table table-hover">
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>{{ script.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Version</strong></td>
+                    <td>{{ script.version }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Author</strong></td>
+                    <td>{{ script.author }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>{{ script.description }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Package</strong></td>
+                    <td>{{ script.package }}
+                    </td>
+                </tr>
+                </table>
+            <form method="post">{% csrf_token %}
+                <p>Enter sudo password: <input type="password" name="password"/></p>
+                <input class="btn btn-primary" type="submit" value="Install" />
+                <a class="btn btn-default" href="{% url 'plugins' %}" /> Cancel </a>
+            </form>
+      </div>
+</div>
+{% endblock %}

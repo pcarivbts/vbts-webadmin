@@ -1,0 +1,75 @@
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Subscribers</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">  
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Caller Id</th>
+            <th>Balance</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for subscriber in subscribers %}
+        <tr>
+            <td>{{ subscriber.name }}
+            </td>
+			<td>{{ subscriber.callerid }}
+            </td>
+            <td>{{ subscriber.account_balance }}
+            </td>
+            <!--
+            <td>{{ subscriber.get_status_display }}
+            </td>
+            -->
+            <td>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if subscribers.has_previous %}
+              <li><a href="?page={{ subscribers.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in subscribers.paginator.page_range %}
+              {% if subscribers.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if subscribers.has_next %}
+              <li><a href="?page={{ subscribers.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}
+			

@@ -1,0 +1,46 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{ config.key }}</h1>
+    <h1>
+        <a href="{% url 'configs' %}" class="glyphicon glyphicon-arrow-left" title="Go back  to list"></a>
+		<a href="{% url 'config_update' config.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+    </h1>
+{% endblock %}
+
+{% block dashboard-content %}
+
+<h3>Configuration Key Details</h3>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Key Name</strong></td>
+            <td>{{ config.key }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Description</strong></td>
+			<td>{{ config.description|linebreaks }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Value</strong></td>
+			<td>{{ config.value }}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

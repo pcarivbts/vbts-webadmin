@@ -1,0 +1,81 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">IVRs</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+		<span>
+			<i class="fa fa-2x fa-tty"></i>
+			<a href="{% url 'ivr_new' %}" class="add-circle btn btn-info" role="button">Create IVR</a>
+		</span>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ivr in ivrs %}
+        <tr>
+            <td><a href="{% url 'ivr_detail' ivr.pk %}" title="View Details">{{ ivr.name }}</a>
+            </td>
+            <td>{{ ivr.number }}
+            </td>
+            <td>{{ ivr.description| truncatechars:50 }}
+            </td>
+
+	    	<td>
+	    		<span class="pull-right">
+				<a href="{% url 'ivr_update' ivr.pk %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+                <a href="{% url 'ivr_delete' ivr.pk %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if ivrs.has_previous %}
+              <li><a href="?page={{ ivrs.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in ivrs.paginator.page_range %}
+              {% if ivrs.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if ivrs.has_next %}
+              <li><a href="?page={{ ivrs.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

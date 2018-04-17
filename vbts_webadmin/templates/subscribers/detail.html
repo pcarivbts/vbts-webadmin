@@ -1,0 +1,50 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{ subscriber.name }}</h1> 
+		<a href="{% url 'subscriber_delete' subscriber.id %}" class="glyphicon glyphicon-envelope"></a>
+		<a href="{% url 'subscriber_update' subscriber.id %}" class="glyphicon glyphicon-pencil"></a>
+		<a href="{% url 'subscriber_delete' subscriber.id %}" class="glyphicon glyphicon-trash"></a>
+		<a href="{% url 'subscriber_delete' subscriber.id %}" class="glyphicon glyphicon-envelope"></a>
+{% endblock %}
+{% block dashboard-content %}
+<table>
+	<tr>
+		<td> <h3>Name</h3> {{subscriber.name}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Description</h3> {{subscriber.description}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Keyword</h3> {{subscriber.keyword}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Send to number</h3> {{subscriber.number}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Subscribers</h3>
+		</td>
+	</tr>
+{% for subscribers in subscriber.subscribers %}
+    <tr><td>
+    		<span>
+			<i class="glyphicon glyphicon-user btn-lg"></i>
+			{{ subscribers }}
+			</span>
+    
+    </td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

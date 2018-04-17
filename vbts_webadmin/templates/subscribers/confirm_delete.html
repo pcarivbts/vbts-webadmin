@@ -1,0 +1,34 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Subscriber</h1> 
+{% endblock %}
+{% block dashboard-content %}
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete this subscriber?
+    <input type="submit" value="Sure" />
+    <input type="button" value="Cancel" />
+</form>
+<table>
+	<tr>
+		<td> <h3>Number</h3> {{subscriber.callerid}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Imsi</h3> {{subscriber.imsi}}
+		</td>
+	</tr>
+	<tr>
+		<td> <h3>Balance</h3> {{subscriber.account_balance}}
+		</td>
+	</tr>
+</table>
+{% endblock %}

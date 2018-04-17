@@ -1,0 +1,101 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Services</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+		<span>
+			<i class="fa fa-2x fa-whatsapp"></i>
+			<a href="{% url 'service_new' %}" class="add-circle btn btn-info" role="button">Create Service</a>
+		</span>
+		&nbsp;
+		<span>
+		</span>
+	</div>
+  </div>
+  <div class="col-lg-6" >
+   <div class="pull-right">
+		{% crispy form%}
+ 	</div>
+  </div>
+</div>
+<br/>
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Keyword</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Script</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for service in services %}
+        <tr>
+            <td>
+                <a href="{% url 'service_detail' service.id %}">{{ service.name }}</a>
+            </td>
+            <td>{{ service.description|truncatechars:25 }}
+            </td>
+			<td>{{ service.keyword }}
+            </td>
+            <td>{{ service.number }}
+            </td>
+            <td>{{ service.get_service_type_display}}
+            </td>
+            <td>{{ service.get_status_display }}
+            </td>
+            <td>{{ service.script }}
+            </td>
+            <td>
+	    		<span class="pull-right">
+				<a href="{% url 'service_update' service.id %}" class="glyphicon glyphicon-pencil"></a>
+     			{% if service.status  == "P" %}
+                    <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-remove" title="Unpublish"></a>
+                {% else %}
+                    <a href="{% url 'service_publish' service.id %}" class="glyphicon glyphicon-ok" title="Publish"></a>
+                {% endif %}
+				<a href="{% url 'service_delete' service.id %}" class="glyphicon glyphicon-trash"></a>
+                </span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if services.has_previous %}
+              <li><a href="?page={{ services.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in services.paginator.page_range %}
+              {% if services.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if services.has_next %}
+              <li><a href="?page={{ services.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <h1 class="page-header">{{ user.username |upper }}</h1>
+{% endblock %}
+{% block dashboard-content %}
+<h3>Profile
+    <a href="{% url 'profile_update' %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+    <a href="{% url 'change_password' %}" class="glyphicon glyphicon-lock" title="Edit"></a>
+</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Username</strong></td>
+            <td>{{ user.username }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Email</strong></td>
+			<td>{{ user.email }}
+            </td>
+		</tr>
+		<tr>
+            <td><strong>First Name</strong></td>
+            <td>{{ user.first_name }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Last Name</strong></td>
+            <td>{{ user.last_name }}
+            </td>
+        </tr>
+
+    </tbody>
+  </table>
+</div>
+<h3>Settings</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+            <td width="35%"><strong>Language</strong></td>
+            <td>{{ user_profile.get_language_display }}</td>
+        </tr>
+        <tr>
+            <td width="35%"><strong>Timezone</strong></td>
+            <td>{{ user_profile.get_timezone_display }}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

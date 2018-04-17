@@ -1,0 +1,279 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">Contacts</h1>
+{% endblock %}
+{% block dashboard-content %}
+<div class="row">
+  <div class="col-lg-6">
+  	<div>
+		<span>
+			<i class="fa fa-2x fa-users"></i>
+			<a href="{% url 'contact_new' %}" class="add-circle btn btn-info" role="button">Create User</a>
+
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+            Utilities <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="{% url 'contact_add_promo' %}">Add promo to contact</a></li>
+              <li><a href="{% url 'contact_upload_csv' %}">Create user profiles via CSV</a></li>
+            </ul>
+        </div>
+
+		</span>
+	</div>
+  </div>
+
+<div class="col-lg-6" >
+<div class="pull-right">
+    {% crispy form%}
+</div>
+</div>
+</div>
+<br/>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Registered users</a></li>
+    <li><a data-toggle="tab" href="#menu1">Unregistered VBTS numbers</a></li>
+    <li><a data-toggle="tab" href="#menu2">All user profiles</a></li>
+    <li><a data-toggle="tab" href="#menu3">Off-network numbers</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <div class="panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>IMSI</th>
+            <th>Caller ID</th>
+            <th>Owner</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for contacts_sim in contacts_sims %}
+        <tr>
+            <td>{{ contacts_sim.contact.imsi }}
+            </td>
+            <td>{{ contacts_sim.contact.callerid }}
+            </td>
+            <td>
+                <a href="{% url 'contact_detail' contacts_sim.contact_profile.id %}"
+                   title="View Detail">{{ contacts_sim.contact_profile.firstname }}
+                    {{ contacts_sim.contact_profile.lastname }}</a>
+            </td>
+            <td>
+	    		<span class="pull-right">
+				<a href="{% url 'contact_update' contacts_sim.contact_profile.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+                    {%comment%}
+				<a href="{% url 'contact_add_promo' contacts_sim.contact_profile.id %}" class="glyphicon glyphicon-usd" title="Add Promo"></a>
+                    {%endcomment%}
+				<a href="{% url 'contact_delete' contacts_sim.contact_profile.id %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if contacts.has_previous %}
+              <li><a href="?page={{ contacts.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in contacts.paginator.page_range %}
+              {% if contacts.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if contacts.has_next %}
+              <li><a href="?page={{ contacts.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+
+
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+
+        <div class="panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>IMSI</th>
+            <th>Caller ID</th>
+            <th>Owner</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for unreg_sim in unreg_sims %}
+        <tr>
+            <td>{{ unreg_sim.imsi }}
+            </td>
+            <td>{{ unreg_sim.callerid }}
+            </td>
+            <td>Unregistered VBTS number
+            </td>
+            <td>
+	    		<span class="pull-right">
+				<a href="{% url 'contact_create_profile' unreg_sim.callerid %}" class="glyphicon glyphicon-plus" title="Create New Profile"></a>
+				<a href="{% url 'contact_assign_profile' unreg_sim.callerid %}" class="glyphicon glyphicon-user" title="Assign to Exisitng Profile"></a>
+                    {%comment%}
+				<a href="{% url 'contact_add_promo' unreg_sim.callerid %}" class="glyphicon glyphicon-usd" title="Add Promo"></a>
+				<a href="{% url 'contact_delete' unreg_sim.callerid %}" class="glyphicon glyphicon-trash" title="Delete"></a>
+                    {%endcomment%}
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if contacts.has_previous %}
+              <li><a href="?page={{ contacts.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in contacts.paginator.page_range %}
+              {% if contacts.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if contacts.has_next %}
+              <li><a href="?page={{ contacts.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+
+
+
+
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <div class="panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            {% comment %}
+            <th>IMSI</th>
+            <th>Caller ID</th>
+            {% endcomment %}
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in profiles %}
+        <tr>
+            {% comment%}
+            <td>None
+            </td>
+            <td>None
+            </td>
+            {% endcomment %}
+            <td><a href="{% url 'contact_detail' profile.id %}">{{ profile}}</a>
+            </td>
+            <td>
+	    		<span class="pull-right">
+                    {% comment %}
+				<a href="{% url 'contact_create_profile' unreg_sim.callerid %}" class="glyphicon glyphicon-plus" title="Create New Profile"></a>
+				<a href="{% url 'contact_assign_profile' unreg_sim.callerid %}" class="glyphicon glyphicon-user" title="Assign to Exisitng Profile"></a>
+                    {%endcomment%}
+				</span>
+	    	</td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if contacts.has_previous %}
+              <li><a href="?page={{ contacts.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in contacts.paginator.page_range %}
+              {% if contacts.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if contacts.has_next %}
+              <li><a href="?page={{ contacts.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <div class="panel-default">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>IMSI</th>
+            <th>Caller ID</th>
+            <th>Owner</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offnet in offnets %}
+        <tr>
+            <td>Unknown
+            </td>
+            <td>{{offnet.callerid}}
+            </td>
+            <td>Off-network number
+            </td>
+            <td></td>
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if contacts.has_previous %}
+              <li><a href="?page={{ contacts.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for pg in contacts.paginator.page_range %}
+              {% if contacts.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if contacts.has_next %}
+              <li><a href="?page={{ contacts.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+    </div>
+  </div>
+
+
+{% endblock %}
+

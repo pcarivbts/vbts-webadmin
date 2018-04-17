@@ -1,0 +1,78 @@
+[
+    {
+        "fields": {
+            "status": "U",
+            "name": "RSS",
+            "keyword": "RSS",
+            "author": 1,
+            "price": 100000,
+            "script": "9b23826f-a476-4cb6-a241-4e6bdd5cf9af",
+            "number": 222,
+            "script_arguments": "{\"feeds\":{\"PSEDUCATION\":\"http://www.philstar.com/rss/education-and-home\",\"PSHEALTH\":\"http://www.philstar.com/rss/health-and-family\",\"PSSPORTS\":\"http://www.philstar.com/rss/sports\",\"PSHEADLINES\":\"http://www.philstar.com/rss/headlines\",\"RAPPLER\":\"http://feeds.feedburner.com/rappler\",\"PSAGRICULTURE\":\"http://www.philstar.com/rss/agriculture\",\"GMA7SPORTS\":\"http://www.gmanetwork.com/news/rss/sports\",\"PSNATION\":\"http://www.philstar.com/rss/nation\",\"GMA7SCITECH\":\"http://www.gmanetwork.com/news/rss/scitech\",\"GMA7NATION\":\"http://www.gmanetwork.com/news/rss/news/nation\",\"PHILSTAR\":\"http://www.philstar.com/rss/breakingnews\",\"GMA7HEALTH\":\"http://www.gmanetwork.com/news/rss/lifestyle/healthandwellness\",\"GMA7SHOWBIZ\":\"http://www.gmanetwork.com/news/rss/showbiz\"},\"max_number_of_feeds\":\"10\"}",
+            "source_file": "",
+            "published_date": "2016-11-22",
+            "service_type": "I",
+            "chatplan": "16_SERVICE_RSS.xml",
+            "description": "RSS"
+        },
+        "model": "vbts_webadmin.service",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "status": "U",
+            "name": "WORD",
+            "keyword": "WORD",
+            "author": 1,
+            "price": 100000,
+            "script": "543d9821-4361-45ed-a64c-84255a7d0081",
+            "number": 222,
+            "script_arguments": null,
+            "source_file": "",
+            "published_date": "2016-11-22",
+            "service_type": "I",
+            "chatplan": null,
+            "description": "DICTIONARY"
+        },
+        "model": "vbts_webadmin.service",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "status": "U",
+            "name": "INQUIRE",
+            "keyword": "INQUIRE",
+            "author": 1,
+            "price": 100000,
+            "script": "1007ec06-9aa7-4a14-a5b7-a50d11694cf4",
+            "number": 222,
+            "script_arguments": "{\"files\":{\"SAMPLE\":\"data/sample.text\"}}",
+            "source_file": "",
+            "published_date": "2016-11-22",
+            "service_type": "I",
+            "chatplan": null,
+            "description": "FILEREADER"
+        },
+        "model": "vbts_webadmin.service",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "status": "U",
+            "name": "TWITS",
+            "keyword": "TWITS",
+            "author": 1,
+            "price": 100000,
+            "script": "4acda29f-a8f2-4ec2-a30d-d2e7c49a35ba",
+            "number": 222,
+            "script_arguments": "{\"TWITTER_TOKEN\":\"token\",\"locations\":{\"WORLDWIDE\":1,\"CALOOCAN\":1167715,\"CEBU\":1199002,\"ANTIPOLO\":1195098,\"CDO\":1198785,\"MAKATI\":1180689,\"QC\":1199682,\"TAGUIG\":1187115,\"MANILA\":1199477,\"PASIG\":1187115,\"PH\":23424934,\"DAVAO\":1199079,\"ZAMBOANGA\":11999802},\"TWITTER_CONSUMER_SECRET\":\"consumer_secret\",\"max_number_of_tweets\":5,\"TWITTER_CONSUMER_KEY\":\"consumer_key\",\"TWITTER_TOKEN_SECRET\":\"token_secret\",\"include_rts\":false}",
+            "source_file": "",
+            "published_date": "2016-11-22",
+            "service_type": "I",
+            "chatplan": null,
+            "description": "TWITS"
+        },
+        "model": "vbts_webadmin.service",
+        "pk": 10
+    }
+]

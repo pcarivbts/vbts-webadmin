@@ -1,0 +1,68 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% load mathfilters %}
+{% block dashboard-header %}
+    <h1 class="page-header">All Service Subscriptions</h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel-default">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Type</th>
+            <th>Subscription Date</th>
+        </tr>
+    </thead>
+    <tbody>
+	    {% for subscription in subscriptions %}
+        <tr>
+            <td>{{ subscription.subscriber }}
+            </td>
+            <td><a href="{% url 'service_detail' subscription.service.id %}">{{ subscription.service}}</a>
+            </td>
+            <td>{{ subscription.service.get_type_display}}
+            </td>
+	    	<td>{{ subscription.date_subscribed }}
+	    	</td>
+            <td><a href="{% url 'service_delete_subscription' subscription.id %}"
+                   class="glyphicon glyphicon-trash" title="Delete subscription"></a>
+            </td>
+
+        </tr>
+		{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if is_paginated %}
+<div>
+      <ul class="pagination no-margin pull-right">
+          {% if subscriptions.has_previous %}
+              <li><a href="?page={{ subscriptions.previous_page_number }}">
+                  Previous</a></li>
+          {% endif %}
+          {% for pg in subscriptions.paginator.page_range %}
+              {% if subscriptions.number == pg %}
+                  <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% else %}
+                  <li><a href="?page={{ pg }}">{{ pg }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if subscriptions.has_next %}
+              <li><a href="?page={{ subscriptions.next_page_number }}">
+                  Next</a></li>
+          {% endif %}
+      </ul>
+</div>
+{% endif %}
+{% endblock %}

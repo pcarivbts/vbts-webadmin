@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% comment %}
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+{% endcomment %}
+{% load staticfiles i18n %}
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'lib/bootstrap-table/bootstrap-table.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+<link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+<link href="{% static 'lib/jquery/css/jquery-ui-1.10.4.custom.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                	{% url 'circles' as circles_url %}
+                <li {% if circles_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'circles' %}"><i class="fa fa-circle"></i>&nbsp;Circles</a>
+                </li>
+	                {% url 'contacts' as contacts_url %}
+                <li {% if contacts_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'contacts' %}"><i class="fa fa-user"></i>&nbsp;Contacts</a>
+                </li>
+                {% url 'documents' as documents_url %}
+                <li {% if subscribers_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'documents' %}"><i class="fa fa-file"></i>&nbsp;Documents<i class="fa arrow"></i></a>
+                </li>
+                    {% url 'groups' as groups_url %}
+                <li {% if groups_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'groups' %}"><i class="fa fa-group"></i>&nbsp;Groups</a>
+                </li>
+                    {% url 'ivrs' as ivrs_url %}
+                <li {% if messages_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'ivrs' %}"><i class="fa fa-tty"></i>&nbsp;IVRs</a>
+                </li>
+                	{% url 'messages' as messages_url %}
+            	<li {% if messages_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'messages' %}"><i class="fa fa-envelope "></i>&nbsp;Messages<i class="fa arrow"></i></a>
+                </li>
+                    {% url 'reports' as reports_url %}
+                <li {% if reports_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'reports' %}"><i class="fa fa-exclamation-triangle"></i>&nbsp;Reports</a>
+                </li>
+                    {% url 'scripts' as scripts_url %}
+                <li {% if scripts_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'scripts' %}"><i class="fa fa-plug"></i>&nbsp;Plugins<i class="fa arrow"></i></a>
+                </li>
+                	{% url 'promos' as promos_url %}
+                <li {% if promos_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'promos' %}"><i class="fa fa-rouble"></i>&nbsp;Promos<i class="fa arrow"></i></a>
+                </li>
+                	{% url 'services' as services_url %}
+                <li {% if services_url in request.get_full_path %}class="active"{% endif %}>
+                    <a href="{% url 'services' %}"><i class="fa fa-phone-square"></i>&nbsp;Services<i class="fa arrow"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+                <div class="dashboard-title">{% block dashboard-title %} {% endblock %}</div>
+                {% block dashboard-alerts %}
+                    {% for alert in messages %}
+                        <div class="alert alert-{{ alert.tags }}">{{ alert }}</div>
+                    {% endfor %}
+                {% endblock %}
+                <div class="dashboard-header">{% block dashboard-header %} {% endblock %}</div>
+                <div class="dashboard-form">{% block dashboard-form %}{% endblock %}</div>
+                <div class="dashboard-content">
+                {% block dashboard-content %}{% endblock %}
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ block.super }}
+<script src="{% static 'lib/bootstrap-table/bootstrap-table.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap-table/bootstrap-table-flatJSON.js' %}"></script>
+<script src="{% static 'lib/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'lib/autocomplete/jquery.autocomplete.min.js' %}"></script>
+<script src="{% static 'lib/jquery/jquery-ui-1.10.4.custom.min.js' %}"></script>
+<script src="{% static 'js/react.js' %}"></script>
+{% endblock %}

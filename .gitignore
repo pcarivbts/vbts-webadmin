@@ -1,0 +1,9 @@
+*.pyc
+*.tmp
+.coverage
+.idea/
+vbts_webadmin/migrations/*
+vbts_webadmin/databases/*
+/.metadata/*
+/.project
+/.pydevproject

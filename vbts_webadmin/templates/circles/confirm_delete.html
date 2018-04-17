@@ -1,0 +1,41 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <!--<h1 class="page-header">{{ circle.name }}</h1>-->
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel panel-danger">
+      <div class="panel-heading"><h3>Delete '{{ circle.name }}'?</h3></div>
+      <div class="panel-body">
+          <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete this circle?</p>
+            <input class="btn btn-primary" type="submit" value="Sure" />
+            <a class="btn btn-default" href="{% url 'circles' %}" /> Cancel </a>
+        </form>
+      </div>
+</div>
+
+
+
+
+<table>
+{% for member in circle.members.all %}
+    <tr><td>
+    		<span>
+			<i class="glyphicon glyphicon-user btn-lg"></i>
+			{{ member }}
+			</span>
+
+    </td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

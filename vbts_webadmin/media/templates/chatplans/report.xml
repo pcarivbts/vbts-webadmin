@@ -1,0 +1,15 @@
+<!-- Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+-->
+<extension name="{{keyword}}">
+  <condition field="${vbts_tp_dest_address}" expression="^{{number}}$"/>
+  <condition field="${data_0}" expression="^{{keyword}}$">
+    <action inline="true" application="python" data="PCARI_Remove_Keyword ${vbts_text}"/>
+    <action application="system" data='curl http://127.0.0.1:7000/api/report/submit -d "imsi=${from_imsi}&keyword=${data_0}&message=${actual_text}" '/>
+    <action inline="true" application="set" data="call_tariff=${system(curl -d 'keyword={{keyword}}' http://127.0.0.1:7000/api/service/price)}"/>
+    <action application="system" data='curl -d "from_number=${vbts_callerid}&from_name=${from_imsi}&service_type=local_services&destination=${vbts_tp_dest_address}&tariff=${call_tariff}" http://127.0.0.1/smscdr'/>
+  </condition>
+</extension>

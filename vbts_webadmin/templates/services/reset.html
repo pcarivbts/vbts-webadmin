@@ -1,0 +1,102 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load apptags %}
+{% load staticfiles i18n %}
+{% block dashboard-title %}
+    <h1 class="page-header">{{ service.name }}</h1>
+{% endblock %}
+{% block dashboard-header %}
+    <h1>
+        <a href="{% url 'service_detail' service.id %}" class="glyphicon glyphicon-arrow-left" title="Return to details"></a>
+        <a href="{% url 'service_update' service.id %}" class="glyphicon glyphicon-pencil" title="Edit"></a>
+        <a href="{% url 'services' %}" class="glyphicon glyphicon-list-alt" title="Return to list"></a>
+    </h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<div class="panel panel-warning">
+  <div class="panel-heading"><h3>Reset {{service.name}}'s properties</h3></div>
+  <div class="panel-body">
+      <form method="post">{% csrf_token %}
+        <p>Are you sure you want to reset service's properties?
+        </p>
+        <input class="btn btn-primary" type="submit" value="Sure"/>
+        <a class="btn btn-default" href="{% url 'service_detail' service.id %}">Cancel</a>
+    </form>
+  </div>
+</div>
+
+<h3>Service Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Name</strong></td>
+            <td>{{ service.name }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Description</strong></td>
+			<td>{{ service.description }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Keyword</strong></td>
+			<td>{{ service.keyword }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Shortcode Number</strong></td>
+			<td>{{ service.number }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Status
+            </strong></td>
+			<td>{{ service.status }}
+			</td>
+		</tr>
+        <tr>
+			<td><strong>Chatplan Filename</strong></td>
+			<td>{{ service.chatplan }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Script</strong></td>
+			<td>{{ service.script }}
+            </td>
+		</tr>
+        <tr>
+			<td><strong>Properties
+                </strong></td>
+			<td>
+                {% for key, value in service.script_arguments.items %}
+                    {% if value|is_dict %}
+                        <p><b>{{key.upper}}
+                        </b></p>
+                        <div>
+                        {% for k, v in value.items %}
+                        <p><b>{{ k }}</b>:  {{ v }}</p>
+                         {% endfor %}
+                        </div>
+                    {% else %}
+                    <p><b>{{ key.upper }}</b>:  {{ value }}</p>
+                    {% endif %}
+                {% endfor %}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

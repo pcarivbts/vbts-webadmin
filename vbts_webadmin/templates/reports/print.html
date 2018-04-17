@@ -1,0 +1,85 @@
+{% comment %}
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+{% endcomment %}
+<h1> VBTS Report Generator </h1>
+<hr/>
+<h3>Report Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+            <td width="30%" ><strong>Name</strong></td>
+            <td>{{ report.name }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Description</strong></td>
+            <td>{{ report.description }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Keyword</strong></td>
+            <td>{{ report.keyword }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Shortcode Number</strong></td>
+            <td>{{ report.number }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Status
+            </strong></td>
+            <td>{{ report.get_status_display }}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Manager(s)</strong></td>
+            <td>{% for manager in report.managers.all %}
+                    {% if not forloop.first %}, {% endif %}
+                        {{ manager }}
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<br/>
+<h3>Report Messages</h3>
+<div class="panel-default">
+    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="text-align:left; width:30%">Date</th>
+                    <th style="text-align:left">Message</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% if reports %}
+        {% for report in reports.all %}
+
+                <tr>
+                <td>{{ report.date}}
+                </td>
+                <td>{{ report.message }}
+                </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+          </table>
+    {% else %}
+        <tbody>
+            <tr>
+            <td>No report messages yet.</td>
+            <td></td>
+            </tr>
+        </tbody>
+    {% endif %}
+</div>

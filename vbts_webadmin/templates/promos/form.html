@@ -1,0 +1,54 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery/jquery-ui-1.10.4.custom.min.js' %}"></script>
+    <h1 class="page-header">Promos</h1>
+{% endblock %}
+{% block dashboard-content %}
+
+<script>
+
+function Hide(){
+    var promo_type = $('#id_promo_type').find(":selected").val();
+    if (promo_type == 'U'){
+        $('[href="#configure-your-unlimited-promo"]').closest('li').show();
+        $('[href="#configure-your-discounted-promo"]').closest('li').hide();
+        $('[href="#configure-your-bulk-promo"]').closest('li').hide();
+
+        $('#tabs a[href="#configure-your-unlimited-promo"]').tab('show');
+    }
+    else if ((promo_type == 'G') || (promo_type == 'D')){
+        $('[href="#configure-your-unlimited-promo"]').closest('li').hide();
+        $('[href="#configure-your-discounted-promo"]').closest('li').show();
+        $('[href="#configure-your-bulk-promo"]').closest('li').hide();
+
+        $('#tabs a[href="#configure-your-discounted-promo"]').tab('show');
+    }
+    else if (promo_type == 'B'){
+        $('[href="#configure-your-unlimited-promo"]').closest('li').hide();
+        $('[href="#configure-your-discounted-promo"]').closest('li').hide();
+        $('[href="#configure-your-bulk-promo"]').closest('li').show();
+
+        $('#tabs a[href="#configure-your-bulk-promo"]').tab('show');
+    }
+}
+
+window.onload = function() {
+    Hide();
+    document.getElementById('id_promo_type').onchange = Hide;
+}
+</script>
+
+{% crispy form %}
+
+{% endblock %}
+

@@ -1,0 +1,87 @@
+{% extends "dashboard.html" %}
+{#
+Copyright (c) 2015-present, Philippine-California Advanced Research Institutes-
+The Village Base Station Project (PCARI-VBTS). All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
+#}
+{% load crispy_forms_tags %}
+{% load staticfiles i18n %}
+{% block dashboard-header %}
+    <h1 class="page-header">{{ group.name }}</h1>
+{% endblock %}
+
+{% block dashboard-content %}
+
+<br>
+<h3>Group Details</h3>
+<div class="panel-default">
+  <table class="table table-hover">
+    <thead>
+        <!--Empty Headers-->
+    </thead>
+    <tbody>
+        <tr>
+			<td><strong>Group Name</strong></td>
+            <td>
+                {{ group.name }}
+            </td>
+        </tr>
+		<tr>
+			<td><strong>Created by</strong></td>
+            <td>
+            {% if group.owner.get_profile.id %}
+			    <a href="{% url 'contact_detail' group.owner.get_profile.id %}" title="View contact">
+                {{ group.owner.get_profile }}</a>
+            {% else %}
+                {{ group.owner.get_profile }}
+            {% endif %}
+            </td>
+		</tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<h3>Group Members</h3>
+<div class="panel-default">
+    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>IMSI</th>
+                    <th>CallerID</th>
+                </tr>
+            </thead>
+    {% if group.members.all %}
+        {% for member in group.members.all %}
+        <tr>
+            <td>
+                {% if member.get_profile.id %}
+                    <a href="{% url 'contact_detail' member.get_profile.id %}" title="View contact">
+                    {{ member.get_profile }}</a>
+                {% else %}
+                    {{ member.get_profile }}
+                {% endif %}
+            </td>
+            <td>
+                {{ member.imsi }}
+            </td>
+            <td>{{ member.callerid }}
+            </td>
+        </tr>
+		{% endfor %}
+    {% else %}
+        <tbody>
+            <td>No members.</td>
+            <td></td>
+            <td></td>
+        </tbody>
+    {% endif %}
+    </table>
+</div>
+
+{% endblock %}
+
+
