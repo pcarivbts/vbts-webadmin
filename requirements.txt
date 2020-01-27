@@ -5,5 +5,5 @@ django-celery==3.2.1
 django-crispy-forms==1.6.1
 django-easy-pdf==0.1.1
 django-mathfilters==0.4.0
-djangorestframework==3.7.1
+djangorestframework==3.9.1
 jsonfield==2.0.2
