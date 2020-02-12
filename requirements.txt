@@ -1,5 +1,5 @@
 celery==3.1.25
-django==1.11
+django==1.11.28
 django-autocomplete-light==3.2.9
 django-celery==3.2.1
 django-crispy-forms==1.6.1
